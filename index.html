@@ -13,8 +13,10 @@
             --accent: #6366f1;
             --accent-soft: #818cf8;
             --accent-glow: rgba(99,102,241,0.15);
+            --accent-glow-strong: rgba(99,102,241,0.25);
             --gold: #f59e0b;
             --gold-soft: rgba(245,158,11,0.12);
+            --emerald: #10b981;
             --text: #1e293b;
             --text-secondary: #64748b;
             --text-muted: #94a3b8;
@@ -23,10 +25,11 @@
             --border: #e2e8f0;
             --border-light: #f1f5f9;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-            --shadow-lg: 0 8px 24px rgba(0,0,0,0.10);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+            --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.16);
             --radius: 14px;
-            --radius-lg: 18px;
+            --radius-lg: 20px;
             --nav-h: 56px;
             --bottom-nav-h: 60px;
             --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -49,9 +52,18 @@
             padding-bottom: calc(var(--bottom-nav-h) + var(--safe-bottom));
         }
 
-        /* ──────────────────────────────────────
-           TOP NAV
-        ────────────────────────────────────── */
+        /* ── SCROLL PROGRESS BAR ── */
+        #progress-bar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), #a78bfa, var(--gold));
+            z-index: 9999;
+            transition: width 0.1s linear;
+        }
+
+        /* ── TOP NAV ── */
         .top-nav {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -61,16 +73,17 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 16px;
-            background: rgba(15,23,42,0.92);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(15,23,42,0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255,255,255,0.07);
-            transition: background 0.3s;
+            transition: background 0.3s, box-shadow 0.3s;
         }
 
         .top-nav.light {
             background: rgba(255,255,255,0.94);
             border-bottom-color: var(--border);
+            box-shadow: 0 1px 12px rgba(0,0,0,0.06);
         }
 
         .top-nav-brand {
@@ -79,12 +92,11 @@
             font-size: 1.05rem;
             color: white;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: color 0.3s, opacity 0.2s;
         }
-
+        .top-nav-brand:hover { opacity: 0.8; }
         .top-nav.light .top-nav-brand { color: var(--primary); }
 
-        /* Hamburger → drawer trigger */
         .menu-btn {
             width: 40px; height: 40px;
             border-radius: 10px;
@@ -96,9 +108,7 @@
             cursor: pointer;
             transition: background 0.2s;
         }
-
         .top-nav.light .menu-btn { background: var(--border-light); }
-
         .menu-btn span {
             display: block;
             width: 18px; height: 2px;
@@ -106,24 +116,20 @@
             background: white;
             transition: 0.3s;
         }
-
         .top-nav.light .menu-btn span { background: var(--text); }
-
         .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .menu-btn.open span:nth-child(2) { opacity: 0; }
         .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-        /* ──────────────────────────────────────
-           DRAWER MENU
-        ────────────────────────────────────── */
+        /* ── DRAWER ── */
         .drawer-overlay {
             position: fixed; inset: 0;
-            background: rgba(0,0,0,0.45);
+            background: rgba(0,0,0,0.5);
             z-index: 950;
             opacity: 0; pointer-events: none;
             transition: opacity 0.3s;
+            backdrop-filter: blur(4px);
         }
-
         .drawer-overlay.open { opacity: 1; pointer-events: all; }
 
         .drawer {
@@ -137,9 +143,8 @@
             transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             padding: calc(var(--nav-h) + 16px) 0 24px;
             overflow-y: auto;
-            box-shadow: -8px 0 32px rgba(0,0,0,0.12);
+            box-shadow: -12px 0 48px rgba(0,0,0,0.16);
         }
-
         .drawer.open { transform: translateX(0); }
 
         .drawer-section-label {
@@ -159,16 +164,13 @@
             color: var(--text);
             font-weight: 500;
             font-size: 0.95rem;
-            padding: 13px 20px;
-            border-radius: 0;
+            padding: 12px 20px;
             transition: background 0.2s, color 0.2s;
         }
-
         .drawer a:hover, .drawer a.active {
             background: var(--accent-glow);
             color: var(--accent);
         }
-
         .drawer a .d-icon {
             width: 32px; height: 32px;
             background: var(--border-light);
@@ -177,119 +179,187 @@
             flex-shrink: 0;
             transition: background 0.2s;
         }
-
-        .drawer a:hover .d-icon, .drawer a.active .d-icon {
-            background: var(--accent-glow);
-        }
-
+        .drawer a:hover .d-icon, .drawer a.active .d-icon { background: var(--accent-glow); }
         .drawer a svg { color: var(--text-muted); transition: color 0.2s; }
         .drawer a:hover svg, .drawer a.active svg { color: var(--accent); }
 
-        /* ──────────────────────────────────────
-           HERO
-        ────────────────────────────────────── */
+        /* ── HERO ── */
         .hero {
-            padding: calc(var(--nav-h) + 28px) 16px 36px;
-            background: linear-gradient(160deg, #0f172a 0%, #1e293b 55%, #334155 100%);
+            padding: calc(var(--nav-h) + 32px) 16px 40px;
+            background: linear-gradient(150deg, #0b1120 0%, #0f172a 40%, #1a1f3a 70%, #1e2a45 100%);
             position: relative;
             overflow: hidden;
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
         }
 
+        /* Animated background canvas */
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.55;
+        }
+
+        /* Gradient orbs */
         .hero::before {
             content: '';
             position: absolute;
-            top: -60px; right: -60px;
-            width: 320px; height: 320px;
-            background: radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 70%);
+            top: -80px; right: -80px;
+            width: 420px; height: 420px;
+            background: radial-gradient(circle, rgba(99,102,241,0.22) 0%, transparent 65%);
             border-radius: 50%;
             pointer-events: none;
+            animation: float-orb 8s ease-in-out infinite alternate;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -60px; left: -60px;
+            width: 340px; height: 340px;
+            background: radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 65%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float-orb 10s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes float-orb {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(20px, 20px) scale(1.08); }
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            width: 100%;
         }
 
         .hero-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.09);
             border-radius: var(--radius-lg);
-            padding: 24px 20px 20px;
-            position: relative;
-            z-index: 1;
+            padding: 28px 22px 24px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .hero-top {
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin-bottom: 16px;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .hero-avatar-wrap {
+            flex-shrink: 0;
+            position: relative;
         }
 
         .hero-avatar {
-            flex-shrink: 0;
-            width: 80px; height: 80px;
-            border-radius: 20px;
+            width: 86px; height: 86px;
+            border-radius: 22px;
             overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.15);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            border: 2px solid rgba(255,255,255,0.18);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 4px rgba(99,102,241,0.2);
         }
-
         .hero-avatar img {
             width: 100%; height: 100%;
             object-fit: cover;
             object-position: center top;
         }
 
+        .hero-avatar-badge {
+            position: absolute;
+            bottom: -6px; right: -6px;
+            width: 22px; height: 22px;
+            background: linear-gradient(135deg, var(--emerald), #34d399);
+            border-radius: 6px;
+            border: 2px solid #0f172a;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .hero-avatar-badge::after {
+            content: '';
+            width: 6px; height: 6px;
+            background: white;
+            border-radius: 50%;
+        }
+
         .hero-name {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: white;
             font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 4px;
+            line-height: 1.15;
+            margin-bottom: 5px;
         }
 
         .hero-subtitle {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: var(--accent-soft);
             font-weight: 500;
             line-height: 1.4;
         }
 
         .hero-affiliation {
-            font-size: 0.78rem;
-            color: rgba(255,255,255,0.45);
-            line-height: 1.55;
-            margin-bottom: 16px;
+            font-size: 0.77rem;
+            color: rgba(255,255,255,0.42);
+            line-height: 1.6;
+            margin-bottom: 18px;
         }
+
+        /* Research interest tags */
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+        .hero-tag {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            letter-spacing: 0.3px;
+        }
+        .hero-tag-blue  { background: rgba(99,102,241,0.2); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.3); }
+        .hero-tag-green { background: rgba(16,185,129,0.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.25); }
+        .hero-tag-gold  { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.25); }
 
         /* Stats bar */
         .hero-stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 1px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 12px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 14px;
             overflow: hidden;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         .hero-stat {
-            background: rgba(255,255,255,0.05);
-            padding: 12px 4px;
+            background: rgba(255,255,255,0.04);
+            padding: 14px 4px;
             text-align: center;
+            transition: background 0.2s;
         }
+        .hero-stat:hover { background: rgba(255,255,255,0.08); }
 
         .hero-stat-num {
             font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: white;
             line-height: 1;
         }
 
         .hero-stat-label {
-            font-size: 0.62rem;
-            color: rgba(255,255,255,0.45);
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.42);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 3px;
+            letter-spacing: 0.8px;
+            margin-top: 4px;
         }
 
         /* Contact chips */
@@ -307,27 +377,23 @@
             font-size: 0.78rem;
             color: rgba(255,255,255,0.8);
             font-weight: 500;
-            padding: 7px 13px;
+            padding: 8px 14px;
             background: rgba(255,255,255,0.07);
             border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 8px;
-            transition: background 0.2s;
+            border-radius: 10px;
+            transition: background 0.2s, border-color 0.2s, transform 0.15s;
+        }
+        .hero-chip:hover {
+            background: rgba(255,255,255,0.13);
+            border-color: rgba(255,255,255,0.22);
+            transform: translateY(-1px);
         }
 
-        .hero-chip:active { background: rgba(255,255,255,0.14); }
-
-        /* ──────────────────────────────────────
-           SECTION BASE
-        ────────────────────────────────────── */
-        .section {
-            padding: 32px 16px;
-        }
-
+        /* ── SECTION BASE ── */
+        .section { padding: 36px 16px; }
         .section-alt { background: var(--bg-cool); }
 
-        .section-header {
-            margin-bottom: 20px;
-        }
+        .section-header { margin-bottom: 24px; }
 
         .section-label {
             font-size: 0.68rem;
@@ -340,7 +406,7 @@
 
         .section-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: var(--primary);
             font-weight: 700;
             letter-spacing: -0.02em;
@@ -348,15 +414,13 @@
         }
 
         .section-line {
-            width: 36px; height: 3px;
+            width: 40px; height: 3px;
             background: linear-gradient(90deg, var(--accent), var(--accent-soft));
             border-radius: 3px;
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
-        /* ──────────────────────────────────────
-           EDUCATION – horizontal scroll cards
-        ────────────────────────────────────── */
+        /* ── EDUCATION ── */
         .edu-scroll {
             display: flex;
             gap: 12px;
@@ -364,7 +428,6 @@
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
             padding-bottom: 6px;
-            /* hide scrollbar */
             scrollbar-width: none;
         }
         .edu-scroll::-webkit-scrollbar { display: none; }
@@ -372,15 +435,19 @@
         .edu-card {
             flex: 0 0 240px;
             scroll-snap-align: start;
-            padding: 20px 18px;
+            padding: 22px 18px;
             background: white;
             border-radius: var(--radius);
             border: 1px solid var(--border-light);
             box-shadow: var(--shadow-sm);
             position: relative;
             overflow: hidden;
+            transition: box-shadow 0.25s, transform 0.25s;
         }
-
+        .edu-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
         .edu-card::before {
             content: '';
             position: absolute;
@@ -401,70 +468,101 @@
             font-weight: 600;
             font-size: 0.98rem;
             color: var(--primary);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             line-height: 1.3;
         }
 
-        .edu-school {
-            color: var(--text-secondary);
-            font-size: 0.82rem;
+        .edu-school { color: var(--text-secondary); font-size: 0.82rem; }
+
+        .edu-flag {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: var(--bg-cool);
+            padding: 2px 8px;
+            border-radius: 5px;
         }
 
-        /* ──────────────────────────────────────
-           EXPERIENCE TIMELINE
-        ────────────────────────────────────── */
+        /* ── EXPERIENCE TIMELINE ── */
         .timeline {
             position: relative;
-            padding-left: 24px;
+            padding-left: 26px;
         }
 
         .timeline::before {
             content: '';
             position: absolute;
-            left: 7px; top: 10px; bottom: 10px;
-            width: 1px;
-            background: linear-gradient(180deg, var(--accent) 0%, var(--border) 100%);
+            left: 8px; top: 16px; bottom: 16px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent) 0%, rgba(99,102,241,0.2) 100%);
+            border-radius: 2px;
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             padding: 18px 16px;
             background: white;
             border-radius: var(--radius);
             border: 1px solid var(--border-light);
             box-shadow: var(--shadow-sm);
-            transition: box-shadow 0.2s;
+            transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
         }
-
-        .timeline-item:active { box-shadow: var(--shadow-md); }
+        .timeline-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateX(3px);
+            border-color: rgba(99,102,241,0.2);
+        }
 
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -20px; top: 22px;
-            width: 8px; height: 8px;
+            left: -22px; top: 22px;
+            width: 10px; height: 10px;
             border: 2px solid var(--accent);
             border-radius: 50%;
             background: white;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+            transition: box-shadow 0.25s;
+        }
+        .timeline-item:hover::before {
+            box-shadow: 0 0 0 5px rgba(99,102,241,0.2);
+        }
+
+        /* Current position indicator */
+        .timeline-item.current::before {
+            background: var(--accent);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(99,102,241,0.2); }
+            50% { box-shadow: 0 0 0 6px rgba(99,102,241,0.1); }
         }
 
         .timeline-date {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
             font-size: 0.7rem;
             font-weight: 600;
             color: var(--accent);
             background: var(--accent-glow);
-            padding: 3px 9px;
+            padding: 3px 10px;
             border-radius: 6px;
             margin-bottom: 8px;
+        }
+
+        .timeline-date.current-badge {
+            background: rgba(16,185,129,0.12);
+            color: var(--emerald);
         }
 
         .timeline-title {
             font-weight: 700;
             color: var(--primary);
             font-size: 0.93rem;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
 
         .timeline-org {
@@ -474,64 +572,75 @@
             line-height: 1.4;
         }
 
-        .timeline-desc {
-            list-style: none;
-        }
-
+        .timeline-desc { list-style: none; }
         .timeline-desc li {
             position: relative;
             padding-left: 14px;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             color: var(--text-secondary);
             font-size: 0.82rem;
             line-height: 1.55;
         }
-
         .timeline-desc li::before {
             content: '';
             position: absolute;
             left: 0; top: 8px;
             width: 4px; height: 4px;
-            background: var(--text-muted);
+            background: var(--accent-soft);
             border-radius: 50%;
         }
 
-        /* expand/collapse */
         .timeline-item .tl-body {
             overflow: hidden;
             max-height: 0;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.35s ease;
         }
-
-        .timeline-item.expanded .tl-body {
-            max-height: 400px;
-        }
+        .timeline-item.expanded .tl-body { max-height: 500px; }
 
         .tl-toggle {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             margin-top: 8px;
-            font-size: 0.76rem;
+            font-size: 0.75rem;
             font-weight: 600;
             color: var(--accent);
-            background: none;
+            background: var(--accent-glow);
             border: none;
-            padding: 0;
+            padding: 4px 10px;
+            border-radius: 6px;
             cursor: pointer;
+            transition: background 0.2s;
+        }
+        .tl-toggle:hover { background: var(--accent-glow-strong); }
+        .tl-toggle svg { transition: transform 0.25s; }
+        .timeline-item.expanded .tl-toggle svg { transform: rotate(180deg); }
+
+        /* ── PUBLICATIONS ── */
+        .pub-filter {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
         }
 
-        .tl-toggle svg {
-            transition: transform 0.25s;
+        .pub-filter-btn {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .pub-filter-btn:hover, .pub-filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
         }
 
-        .timeline-item.expanded .tl-toggle svg {
-            transform: rotate(180deg);
-        }
-
-        /* ──────────────────────────────────────
-           PUBLICATIONS
-        ────────────────────────────────────── */
         .pub-list {
             display: flex;
             flex-direction: column;
@@ -545,10 +654,24 @@
             background: white;
             border-radius: var(--radius);
             border: 1px solid var(--border-light);
+            border-left: 3px solid transparent;
             box-shadow: var(--shadow-sm);
             display: flex;
             gap: 12px;
             align-items: flex-start;
+            transition: box-shadow 0.25s, transform 0.25s, border-left-color 0.25s;
+        }
+        .pub-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateX(2px);
+            border-left-color: var(--accent);
+        }
+        .pub-item.high-impact {
+            border-left-color: var(--gold);
+            background: linear-gradient(to right, rgba(245,158,11,0.03), white);
+        }
+        .pub-item.high-impact:hover {
+            border-left-color: var(--gold);
         }
 
         .pub-num {
@@ -561,6 +684,9 @@
             font-weight: 700;
             font-size: 0.72rem;
         }
+        .pub-item.high-impact .pub-num {
+            background: linear-gradient(135deg, #d97706, var(--gold));
+        }
 
         .pub-body { flex: 1; min-width: 0; }
 
@@ -569,7 +695,7 @@
             color: var(--text);
             font-size: 0.88rem;
             line-height: 1.5;
-            margin-bottom: 6px;
+            margin-bottom: 7px;
         }
 
         .pub-meta {
@@ -577,14 +703,11 @@
             flex-wrap: wrap;
             align-items: center;
             gap: 6px;
-            font-size: 0.78rem;
+            font-size: 0.77rem;
             color: var(--text-muted);
         }
 
-        .pub-journal {
-            color: var(--text-secondary);
-            font-style: italic;
-        }
+        .pub-journal { color: var(--text-secondary); font-style: italic; }
 
         .pub-if {
             display: inline-flex;
@@ -596,7 +719,6 @@
             font-size: 0.7rem;
             font-weight: 700;
         }
-
         .pub-if-high {
             background: var(--gold-soft);
             color: #d97706;
@@ -606,20 +728,35 @@
             color: var(--accent);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.76rem;
-            padding: 2px 7px;
-            border-radius: 4px;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 5px;
             background: var(--accent-glow);
+            transition: background 0.2s;
         }
+        .pub-link:hover { background: var(--accent-glow-strong); }
 
-        /* ──────────────────────────────────────
-           PATENT
-        ────────────────────────────────────── */
+        /* ── PATENT ── */
         .patent-card {
-            padding: 22px 18px;
+            padding: 24px 20px;
             background: linear-gradient(135deg, #fffbeb, #fef3c7);
             border-radius: var(--radius);
-            border: 1px solid rgba(245,158,11,0.2);
+            border: 1px solid rgba(245,158,11,0.25);
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.25s, transform 0.25s;
+        }
+        .patent-card:hover {
+            box-shadow: 0 8px 32px rgba(245,158,11,0.15);
+            transform: translateY(-2px);
+        }
+        .patent-card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 100px; height: 100px;
+            background: radial-gradient(circle, rgba(245,158,11,0.12), transparent 70%);
+            pointer-events: none;
         }
 
         .patent-label {
@@ -627,12 +764,12 @@
             font-size: 0.68rem;
             font-weight: 700;
             color: #92400e;
-            background: rgba(245,158,11,0.15);
+            background: rgba(245,158,11,0.18);
             padding: 3px 10px;
             border-radius: 5px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .patent-title {
@@ -640,81 +777,78 @@
             font-weight: 600;
             color: #78350f;
             font-size: 0.95rem;
-            margin-bottom: 8px;
-            line-height: 1.5;
+            margin-bottom: 10px;
+            line-height: 1.55;
         }
 
         .patent-number {
             font-size: 0.82rem;
             color: #92400e;
             font-weight: 500;
+            font-family: 'Inter', monospace;
         }
 
-        /* ──────────────────────────────────────
-           BOOKS
-        ────────────────────────────────────── */
-        .book-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        /* ── BOOKS ── */
+        .book-list { display: flex; flex-direction: column; gap: 12px; }
 
         .book-card {
-            padding: 16px;
+            padding: 18px;
             background: white;
             border-radius: var(--radius);
             border: 1px solid var(--border-light);
             box-shadow: var(--shadow-sm);
             display: flex;
-            gap: 14px;
+            gap: 16px;
             align-items: center;
+            transition: box-shadow 0.25s, transform 0.25s;
+        }
+        .book-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
         }
 
         .book-cover {
             flex-shrink: 0;
-            width: 44px; height: 58px;
+            width: 46px; height: 62px;
             background: linear-gradient(135deg, var(--primary), var(--primary-mid));
             border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.15);
+            box-shadow: 4px 4px 12px rgba(0,0,0,0.18);
             position: relative;
         }
-
         .book-cover::after {
             content: '';
             position: absolute;
-            left: 3px; top: 4px; bottom: 4px;
+            left: 4px; top: 5px; bottom: 5px;
             width: 1px;
             background: rgba(255,255,255,0.18);
         }
-
-        .book-cover svg { color: rgba(255,255,255,0.6); }
+        .book-cover svg { color: rgba(255,255,255,0.7); }
 
         .book-title {
             font-weight: 600;
             color: var(--primary);
             font-size: 0.9rem;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
+            line-height: 1.35;
         }
+        .book-pub { font-size: 0.78rem; color: var(--text-muted); }
 
-        .book-pub {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-
-        /* ──────────────────────────────────────
-           PRESENTATIONS
-        ────────────────────────────────────── */
+        /* ── PRESENTATIONS ── */
         .pres-card {
-            padding: 20px 16px 20px 20px;
+            padding: 22px 18px 22px 22px;
             background: white;
             border-radius: var(--radius);
             border: 1px solid var(--border-light);
             box-shadow: var(--shadow-sm);
             position: relative;
             overflow: hidden;
+            transition: box-shadow 0.25s, transform 0.25s;
         }
-
+        .pres-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
         .pres-card::before {
             content: '';
             position: absolute;
@@ -737,27 +871,21 @@
         }
 
         .pres-title {
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text);
             line-height: 1.55;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-size: 0.9rem;
         }
 
         .pres-venue {
             font-size: 0.8rem;
             color: var(--text-muted);
-            line-height: 1.55;
+            line-height: 1.6;
         }
 
-        /* ──────────────────────────────────────
-           AWARDS
-        ────────────────────────────────────── */
-        .award-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        /* ── AWARDS ── */
+        .award-list { display: flex; flex-direction: column; gap: 10px; }
 
         .award-card {
             padding: 16px;
@@ -766,40 +894,34 @@
             border: 1px solid var(--border-light);
             box-shadow: var(--shadow-sm);
             display: flex;
-            gap: 12px;
+            gap: 14px;
             align-items: center;
+            transition: box-shadow 0.25s, transform 0.25s;
+        }
+        .award-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateX(3px);
         }
 
         .award-badge {
             flex-shrink: 0;
-            width: 40px; height: 40px;
+            width: 42px; height: 42px;
             background: var(--gold-soft);
             border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
         }
-
         .award-badge svg { color: var(--gold); }
 
         .award-title {
             font-weight: 600;
             color: var(--primary);
             font-size: 0.88rem;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
+        .award-date { font-size: 0.78rem; color: var(--text-muted); }
 
-        .award-date {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-
-        /* ──────────────────────────────────────
-           LECTURES
-        ────────────────────────────────────── */
-        .lecture-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        /* ── LECTURES ── */
+        .lecture-list { display: flex; flex-direction: column; gap: 8px; }
 
         .lecture-item {
             padding: 14px 16px;
@@ -807,13 +929,18 @@
             border-radius: var(--radius);
             border: 1px solid var(--border-light);
             box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .lecture-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateX(2px);
         }
 
         .lecture-title {
             font-weight: 500;
             color: var(--text);
             font-size: 0.87rem;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             line-height: 1.45;
         }
 
@@ -824,10 +951,7 @@
             gap: 8px;
         }
 
-        .lecture-venue {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
+        .lecture-venue { font-size: 0.75rem; color: var(--text-muted); }
 
         .lecture-date {
             flex-shrink: 0;
@@ -839,14 +963,8 @@
             border-radius: 5px;
         }
 
-        /* ──────────────────────────────────────
-           CERTIFICATIONS
-        ────────────────────────────────────── */
-        .cert-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        /* ── CERTIFICATIONS ── */
+        .cert-list { display: flex; flex-direction: column; gap: 10px; }
 
         .cert-card {
             padding: 16px;
@@ -857,32 +975,26 @@
             display: flex;
             align-items: center;
             gap: 14px;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .cert-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateX(2px);
         }
 
         .cert-icon {
             flex-shrink: 0;
-            width: 38px; height: 38px;
+            width: 40px; height: 40px;
             background: var(--accent-glow);
             border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
         }
-
         .cert-icon svg { color: var(--accent); }
 
-        .cert-name {
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 0.88rem;
-        }
+        .cert-name { font-weight: 600; color: var(--primary); font-size: 0.88rem; }
+        .cert-detail { font-size: 0.78rem; color: var(--text-muted); }
 
-        .cert-detail {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-
-        /* ──────────────────────────────────────
-           SKILLS – 2-col chip grid
-        ────────────────────────────────────── */
+        /* ── SKILLS ── */
         .skills-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -895,39 +1007,70 @@
             border-radius: var(--radius);
             border: 1px solid var(--border-light);
             box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .skill-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
         }
 
         .skill-name {
             font-weight: 700;
             color: var(--primary);
             font-size: 0.85rem;
-            margin-bottom: 4px;
+        }
+
+        .skill-pct {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .skill-bar-track {
+            height: 4px;
+            background: var(--border-light);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+            width: 0%;
+            transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .skill-desc {
             color: var(--text-muted);
-            font-size: 0.76rem;
+            font-size: 0.74rem;
             line-height: 1.45;
         }
 
-        /* ──────────────────────────────────────
-           FOOTER
-        ────────────────────────────────────── */
+        /* ── FOOTER ── */
         .site-footer {
             background: var(--primary);
-            padding: 32px 16px calc(24px + var(--safe-bottom));
+            padding: 40px 16px calc(28px + var(--safe-bottom));
             text-align: center;
         }
 
         .site-footer h3 {
             font-family: 'Playfair Display', serif;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             margin-bottom: 6px;
         }
 
         .site-footer p {
-            color: rgba(255,255,255,0.45);
+            color: rgba(255,255,255,0.42);
             font-size: 0.82rem;
             line-height: 1.6;
         }
@@ -937,7 +1080,7 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 10px;
-            margin-top: 18px;
+            margin-top: 20px;
         }
 
         .footer-chips a {
@@ -945,34 +1088,32 @@
             text-decoration: none;
             font-size: 0.82rem;
             font-weight: 500;
-            padding: 7px 16px;
+            padding: 8px 18px;
             border: 1px solid rgba(255,255,255,0.12);
             border-radius: 8px;
             transition: all 0.2s;
         }
-
-        .footer-chips a:active {
+        .footer-chips a:hover {
             background: rgba(255,255,255,0.08);
             color: white;
+            border-color: rgba(255,255,255,0.2);
         }
 
         .copyright {
-            margin-top: 24px;
-            padding-top: 16px;
+            margin-top: 26px;
+            padding-top: 18px;
             border-top: 1px solid rgba(255,255,255,0.07);
             font-size: 0.72rem;
-            color: rgba(255,255,255,0.25);
+            color: rgba(255,255,255,0.22);
         }
 
-        /* ──────────────────────────────────────
-           BOTTOM TAB NAV
-        ────────────────────────────────────── */
+        /* ── BOTTOM TAB NAV ── */
         .bottom-nav {
             position: fixed;
             bottom: 0; left: 0; right: 0;
             height: calc(var(--bottom-nav-h) + var(--safe-bottom));
             padding-bottom: var(--safe-bottom);
-            background: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.96);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid var(--border);
@@ -981,10 +1122,7 @@
             z-index: 800;
         }
 
-        .bn-tabs {
-            display: flex;
-            width: 100%;
-        }
+        .bn-tabs { display: flex; width: 100%; }
 
         .bn-tab {
             flex: 1;
@@ -1001,63 +1139,66 @@
             transition: color 0.2s;
             min-height: var(--bottom-nav-h);
         }
-
         .bn-tab.active { color: var(--accent); }
-
         .bn-tab svg { transition: transform 0.2s; }
-        .bn-tab.active svg { transform: scale(1.1); }
-
+        .bn-tab.active svg { transform: scale(1.15); }
         .bn-tab-label { line-height: 1; margin-top: 1px; }
 
-        /* ──────────────────────────────────────
-           SCROLL REVEAL
-        ────────────────────────────────────── */
+        /* ── BACK TO TOP ── */
+        #back-to-top {
+            position: fixed;
+            bottom: calc(var(--bottom-nav-h) + var(--safe-bottom) + 16px);
+            right: 16px;
+            width: 42px; height: 42px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            z-index: 700;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.3s, transform 0.3s, box-shadow 0.2s;
+            box-shadow: 0 4px 16px rgba(99,102,241,0.4);
+        }
+        #back-to-top.visible { opacity: 1; transform: translateY(0); }
+        #back-to-top:hover { box-shadow: 0 6px 20px rgba(99,102,241,0.55); transform: translateY(-2px); }
+
+        /* ── SCROLL REVEAL ── */
         .reveal {
             opacity: 0;
-            transform: translateY(18px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: translateY(20px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
         }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        .reveal.visible { opacity: 1; transform: translateY(0); }
         .reveal-d1 { transition-delay: 0.08s; }
         .reveal-d2 { transition-delay: 0.16s; }
         .reveal-d3 { transition-delay: 0.24s; }
 
-        /* ──────────────────────────────────────
-           DESKTOP OVERRIDE (≥768px)
-        ────────────────────────────────────── */
+        /* ── DESKTOP (≥768px) ── */
         @media (min-width: 768px) {
             body { padding-bottom: 0; }
             .bottom-nav { display: none; }
+            #back-to-top { bottom: 28px; right: 28px; }
 
-            .top-nav {
-                padding: 0 32px;
-                height: 64px;
-            }
-
+            .top-nav { padding: 0 32px; height: 64px; }
             .menu-btn { display: none; }
 
-            /* Show inline links on desktop */
             .desktop-links {
                 display: flex !important;
                 gap: 2px;
                 list-style: none;
             }
-
             .desktop-links a {
                 text-decoration: none;
-                color: rgba(255,255,255,0.75);
+                color: rgba(255,255,255,0.72);
                 font-size: 0.82rem;
                 font-weight: 500;
                 padding: 7px 13px;
                 border-radius: 8px;
                 transition: all 0.2s;
             }
-
             .top-nav.light .desktop-links a { color: var(--text-secondary); }
             .desktop-links a:hover, .desktop-links a.active {
                 color: white; background: rgba(255,255,255,0.12);
@@ -1067,35 +1208,42 @@
                 color: var(--accent); background: var(--accent-glow);
             }
 
-            .hero { padding: 110px 32px 72px; }
-            .hero-card { padding: 36px 32px; max-width: 820px; margin: 0 auto; }
-            .hero-top { gap: 24px; }
-            .hero-avatar { width: 110px; height: 110px; border-radius: 24px; }
-            .hero-name { font-size: 2rem; }
-            .hero-subtitle { font-size: 0.92rem; }
+            .hero {
+                padding: 100px 32px 80px;
+                min-height: auto;
+                align-items: flex-start;
+            }
+            .hero-inner { max-width: 860px; margin: 0 auto; }
+            .hero-card { padding: 40px 36px; }
+            .hero-top { gap: 28px; }
+            .hero-avatar { width: 114px; height: 114px; border-radius: 26px; }
+            .hero-name { font-size: 2.2rem; }
+            .hero-subtitle { font-size: 0.94rem; }
 
-            .section { padding: 72px 32px; max-width: 900px; margin-left: auto; margin-right: auto; }
-            .section-inner { max-width: 860px; }
+            .section { padding: 80px 32px; max-width: 960px; margin-left: auto; margin-right: auto; }
 
             .edu-scroll {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
                 overflow: visible;
             }
-
             .edu-card { flex: unset; }
 
             .skills-grid { grid-template-columns: repeat(3, 1fr); }
+
+            .pub-item { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
+<!-- Progress bar -->
+<div id="progress-bar"></div>
+
 <!-- ── TOP NAV ── -->
 <nav class="top-nav" id="topNav">
     <a href="#about" class="top-nav-brand">Hanpyo Hong</a>
 
-    <!-- Desktop inline links (hidden on mobile) -->
     <ul class="desktop-links" style="display:none;" id="desktopLinks">
         <li><a href="#about">About</a></li>
         <li><a href="#education">Education</a></li>
@@ -1116,95 +1264,79 @@
 <div class="drawer-overlay" id="drawerOverlay"></div>
 <div class="drawer" id="drawer">
     <div class="drawer-section-label">Navigation</div>
-    <a href="#about">
-        <span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></span>
-        About
-    </a>
-    <a href="#education">
-        <span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
-        Education
-    </a>
-    <a href="#experience">
-        <span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></span>
-        Experience
-    </a>
-    <a href="#publications">
-        <span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
-        Publications
-    </a>
-    <a href="#patent">
-        <span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg></span>
-        Patent
-    </a>
-    <a href="#presentations">
-        <span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
-        Presentations
-    </a>
-    <a href="#books">
-        <span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
-        Books
-    </a>
-    <a href="#awards">
-        <span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></span>
-        Awards
-    </a>
-    <a href="#lectures">
-        <span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-        Lectures
-    </a>
-    <a href="#skills">
-        <span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
-        Skills
-    </a>
+    <a href="#about"><span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></span>About</a>
+    <a href="#education"><span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>Education</a>
+    <a href="#experience"><span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></span>Experience</a>
+    <a href="#publications"><span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>Publications</a>
+    <a href="#patent"><span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg></span>Patent</a>
+    <a href="#presentations"><span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>Presentations</a>
+    <a href="#books"><span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>Books</a>
+    <a href="#awards"><span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></span>Awards</a>
+    <a href="#lectures"><span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Lectures</a>
+    <a href="#skills"><span class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>Skills</a>
 </div>
 
 <!-- ── HERO ── -->
 <section class="hero" id="about">
-    <div class="hero-card reveal">
-        <div class="hero-top">
-            <div class="hero-avatar">
-                <img src="unnamed.jpg" alt="Hanpyo Hong">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-inner">
+        <div class="hero-card reveal">
+            <div class="hero-top">
+                <div class="hero-avatar-wrap">
+                    <div class="hero-avatar">
+                        <img src="unnamed.jpg" alt="Hanpyo Hong">
+                    </div>
+                    <div class="hero-avatar-badge" title="Available for collaboration"></div>
+                </div>
+                <div>
+                    <div class="hero-name">Hanpyo Hong</div>
+                    <div class="hero-subtitle">Research Professor&nbsp;·&nbsp;Ph.D. in Statistics</div>
+                </div>
             </div>
-            <div>
-                <div class="hero-name">Hanpyo Hong</div>
-                <div class="hero-subtitle">Research Professor&nbsp;·&nbsp;Ph.D. in Statistics</div>
+            <div class="hero-affiliation">
+                Division of Biostatistics, Biomedical Research Institute<br>
+                Pusan National University Yangsan Hospital, Korea
             </div>
-        </div>
-        <div class="hero-affiliation">
-            Division of Biostatistics, Biomedical Research Institute<br>
-            Pusan National University Yangsan Hospital, Korea
-        </div>
-        <div class="hero-stats">
-            <div class="hero-stat">
-                <div class="hero-stat-num">20+</div>
-                <div class="hero-stat-label">Papers</div>
+            <div class="hero-tags">
+                <span class="hero-tag hero-tag-blue">Biostatistics</span>
+                <span class="hero-tag hero-tag-blue">Clinical AI</span>
+                <span class="hero-tag hero-tag-green">Medical Imaging AI</span>
+                <span class="hero-tag hero-tag-green">Survival Analysis</span>
+                <span class="hero-tag hero-tag-gold">Six Sigma</span>
+                <span class="hero-tag hero-tag-gold">Data Mining</span>
             </div>
-            <div class="hero-stat">
-                <div class="hero-stat-num">25+</div>
-                <div class="hero-stat-label">Yrs Exp</div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-num" data-count="20" data-suffix="+">0</div>
+                    <div class="hero-stat-label">Papers</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-num" data-count="25" data-suffix="+">0</div>
+                    <div class="hero-stat-label">Yrs Exp</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-num" data-count="1" data-suffix="">0</div>
+                    <div class="hero-stat-label">Patent</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-num" data-count="2" data-suffix="">0</div>
+                    <div class="hero-stat-label">Books</div>
+                </div>
             </div>
-            <div class="hero-stat">
-                <div class="hero-stat-num">1</div>
-                <div class="hero-stat-label">Patent</div>
+            <div class="hero-chips">
+                <a class="hero-chip" href="mailto:drredhong@gmail.com">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    Email
+                </a>
+                <a class="hero-chip" href="https://orcid.org/0000-0002-0573-4527" target="_blank">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8m-3-6h6"/></svg>
+                    ORCID
+                </a>
+                <a class="hero-chip" href="https://scholar.google.com/citations?user=O0eNxqwAAAAJ&hl=ko&oi=ao" target="_blank">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                    Scholar
+                </a>
             </div>
-            <div class="hero-stat">
-                <div class="hero-stat-num">2</div>
-                <div class="hero-stat-label">Books</div>
-            </div>
-        </div>
-        <div class="hero-chips">
-            <a class="hero-chip" href="mailto:drredhong@gmail.com">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                Email
-            </a>
-            <a class="hero-chip" href="https://orcid.org/0000-0002-0573-4527" target="_blank">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8m-3-6h6"/></svg>
-                ORCID
-            </a>
-            <a class="hero-chip" href="https://scholar.google.com/citations?user=O0eNxqwAAAAJ&hl=ko&oi=ao" target="_blank">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                Scholar
-            </a>
         </div>
     </div>
 </section>
@@ -1221,6 +1353,7 @@
             <div class="edu-year">March 2005</div>
             <div class="edu-degree">Ph.D. in Statistics</div>
             <div class="edu-school">Okayama University, Japan</div>
+            <div class="edu-flag">MEXT Scholar</div>
         </div>
         <div class="edu-card reveal reveal-d2">
             <div class="edu-year">August 2000</div>
@@ -1244,13 +1377,11 @@
     </div>
     <div class="timeline">
 
-        <div class="timeline-item reveal">
-            <div class="timeline-date">Apr 2025 – Present</div>
+        <div class="timeline-item current reveal">
+            <div class="timeline-date current-badge">Apr 2025 – Present · Current</div>
             <div class="timeline-title">Research Professor</div>
             <div class="timeline-org">Biomedical Research Institute, Pusan National University Yangsan Hospital</div>
-            <button class="tl-toggle" onclick="toggleTL(this)">
-                Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
+            <button class="tl-toggle" onclick="toggleTL(this)">Details <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div class="tl-body">
                 <ul class="timeline-desc" style="margin-top:10px;">
                     <li>Conducts data analysis and manuscript preparation in collaboration with clinical faculty</li>
@@ -1263,9 +1394,7 @@
             <div class="timeline-date">Dec 2024 – Mar 2025</div>
             <div class="timeline-title">Researcher</div>
             <div class="timeline-org">Institute of Medical Science and Life Research, Konyang University Medical Center</div>
-            <button class="tl-toggle" onclick="toggleTL(this)">
-                Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
+            <button class="tl-toggle" onclick="toggleTL(this)">Details <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div class="tl-body">
                 <ul class="timeline-desc" style="margin-top:10px;">
                     <li>Developed the K-MIMIC database (specialized for critically ill patients) and predictive models for clinical outcomes</li>
@@ -1274,13 +1403,11 @@
             </div>
         </div>
 
-        <div class="timeline-item reveal">
-            <div class="timeline-date">Dec 2024 – Present</div>
+        <div class="timeline-item current reveal">
+            <div class="timeline-date current-badge">Dec 2024 – Present · Current</div>
             <div class="timeline-title">Evaluation Committee Member</div>
             <div class="timeline-org">National R&amp;D Projects (Inter-Ministerial Evaluation Committee)</div>
-            <button class="tl-toggle" onclick="toggleTL(this)">
-                Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
+            <button class="tl-toggle" onclick="toggleTL(this)">Details <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div class="tl-body">
                 <ul class="timeline-desc" style="margin-top:10px;">
                     <li>Prepared evaluation reports for national R&amp;D project assessments</li>
@@ -1292,9 +1419,7 @@
             <div class="timeline-date">Jan 2024 – Aug 2024</div>
             <div class="timeline-title">Research Professor</div>
             <div class="timeline-org">Department of Internal Medicine, College of Medicine, Hanyang University</div>
-            <button class="tl-toggle" onclick="toggleTL(this)">
-                Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
+            <button class="tl-toggle" onclick="toggleTL(this)">Details <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div class="tl-body">
                 <ul class="timeline-desc" style="margin-top:10px;">
                     <li>Performed clinical data analysis and collaborated with gastroenterologists on joint research</li>
@@ -1306,9 +1431,7 @@
             <div class="timeline-date">Jun 2022 – Dec 2023</div>
             <div class="timeline-title">Research Professor</div>
             <div class="timeline-org">Yongin Severance Hospital, Yonsei University</div>
-            <button class="tl-toggle" onclick="toggleTL(this)">
-                Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
+            <button class="tl-toggle" onclick="toggleTL(this)">Details <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div class="tl-body">
                 <ul class="timeline-desc" style="margin-top:10px;">
                     <li>Developed and validated AI models for breast cancer detection using radiology X-ray imaging data</li>
@@ -1320,9 +1443,7 @@
             <div class="timeline-date">Dec 2020 – Feb 2022</div>
             <div class="timeline-title">Research Professor</div>
             <div class="timeline-org">Yonsei University, Wonju College of Medicine, AI &amp; Big Data Medical Center</div>
-            <button class="tl-toggle" onclick="toggleTL(this)">
-                Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
+            <button class="tl-toggle" onclick="toggleTL(this)">Details <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div class="tl-body">
                 <ul class="timeline-desc" style="margin-top:10px;">
                     <li>Built and analyzed life-log datasets</li>
@@ -1335,9 +1456,7 @@
             <div class="timeline-date">Apr 2020 – Nov 2020</div>
             <div class="timeline-title">Biostatistician &amp; IRB Reviewer</div>
             <div class="timeline-org">Hanyang University, Biostatistics Collaboration Unit</div>
-            <button class="tl-toggle" onclick="toggleTL(this)">
-                Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
+            <button class="tl-toggle" onclick="toggleTL(this)">Details <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div class="tl-body">
                 <ul class="timeline-desc" style="margin-top:10px;">
                     <li>Conducted statistical analyses and prepared manuscripts with clinical faculty</li>
@@ -1351,9 +1470,7 @@
             <div class="timeline-date">Jun 2014 – Feb 2016</div>
             <div class="timeline-title">Credit Scoring Modeler</div>
             <div class="timeline-org">Stamford Advisory (Singapore-headquartered), Seoul</div>
-            <button class="tl-toggle" onclick="toggleTL(this)">
-                Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
+            <button class="tl-toggle" onclick="toggleTL(this)">Details <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div class="tl-body">
                 <ul class="timeline-desc" style="margin-top:10px;">
                     <li>Designed direct marketing strategies and implemented sales growth campaigns</li>
@@ -1366,9 +1483,7 @@
             <div class="timeline-date">Mar 2010 – Aug 2014</div>
             <div class="timeline-title">Instructor &amp; Research Professor</div>
             <div class="timeline-org">SAS Korea Education Center / Korea University (BK21)</div>
-            <button class="tl-toggle" onclick="toggleTL(this)">
-                Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
+            <button class="tl-toggle" onclick="toggleTL(this)">Details <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div class="tl-body">
                 <ul class="timeline-desc" style="margin-top:10px;">
                     <li>Delivered courses on SAS programming and advanced statistical methodologies</li>
@@ -1381,9 +1496,7 @@
             <div class="timeline-date">Mar 2005 – Dec 2009</div>
             <div class="timeline-title">Six Sigma Specialist</div>
             <div class="timeline-org">POSCO, Six Sigma Team</div>
-            <button class="tl-toggle" onclick="toggleTL(this)">
-                Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
+            <button class="tl-toggle" onclick="toggleTL(this)">Details <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div class="tl-body">
                 <ul class="timeline-desc" style="margin-top:10px;">
                     <li>Delivered lectures on Six Sigma methodology, including statistical analysis and data mining</li>
@@ -1396,9 +1509,7 @@
             <div class="timeline-date">Jul 1999 – Oct 2001</div>
             <div class="timeline-title">Statistical Analyst</div>
             <div class="timeline-org">KOSHA (Korea Occupational Safety &amp; Health Agency)</div>
-            <button class="tl-toggle" onclick="toggleTL(this)">
-                Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
+            <button class="tl-toggle" onclick="toggleTL(this)">Details <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div class="tl-body">
                 <ul class="timeline-desc" style="margin-top:10px;">
                     <li>Produced and analyzed national industrial accident statistics and published annual statistical reports</li>
@@ -1431,9 +1542,14 @@
         <h2 class="section-title">Publications</h2>
         <div class="section-line"></div>
     </div>
+    <div class="pub-filter reveal">
+        <button class="pub-filter-btn active" data-filter="all">All</button>
+        <button class="pub-filter-btn" data-filter="recent">2022–2026</button>
+        <button class="pub-filter-btn" data-filter="high">High Impact (IF 4+)</button>
+    </div>
     <div class="pub-list">
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2026">
             <div class="pub-num">1</div>
             <div class="pub-body">
                 <div class="pub-title">"Laparoscopic Ventriculoperitoneal Shunt Insertion Without a Peel-Away Sheath in Children: A Comparison with Conventional Open Surgery"</div>
@@ -1445,7 +1561,7 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2025">
             <div class="pub-num">2</div>
             <div class="pub-body">
                 <div class="pub-title">"Distinct characteristics of MetALD in the general population"</div>
@@ -1457,7 +1573,7 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2024">
             <div class="pub-num">3</div>
             <div class="pub-body">
                 <div class="pub-title">"Analysis of clinical effectiveness for patients with COPD using the IoMT-based monitoring service"</div>
@@ -1468,7 +1584,7 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2024">
             <div class="pub-num">4</div>
             <div class="pub-body">
                 <div class="pub-title">"Improving the diagnostic performance of inexperienced readers for thyroid nodules through digital self-learning and computer assistance"</div>
@@ -1480,19 +1596,19 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item high-impact reveal" data-year="2024" data-if="high">
             <div class="pub-num">5</div>
             <div class="pub-body">
                 <div class="pub-title">"Adverse effects of tamoxifen treatment on bone mineral density in premenopausal patients with breast cancer: a systematic review and meta-analysis"</div>
                 <div class="pub-meta">
                     <span class="pub-journal">Breast Cancer</span><span>Apr 2024</span>
-                    <span class="pub-if">IF 4.0</span>
+                    <span class="pub-if pub-if-high">IF 4.0</span>
                     <a href="https://doi.org/10.1007/s12282-024-01586-2" target="_blank" class="pub-link">DOI →</a>
                 </div>
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2024">
             <div class="pub-num">6</div>
             <div class="pub-body">
                 <div class="pub-title">"Positive Predictive Values of Abnormality Scores From a Commercial AI-Based CAD for Mammography"</div>
@@ -1503,7 +1619,7 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2024">
             <div class="pub-num">7</div>
             <div class="pub-body">
                 <div class="pub-title">"Diagnostic performance with and without artificial intelligence assistance in real-world screening mammography"</div>
@@ -1515,7 +1631,7 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2023">
             <div class="pub-num">8</div>
             <div class="pub-body">
                 <div class="pub-title">"AI-Assisted Diagnosis in Mammography: A Survey of 100 Radiologists"</div>
@@ -1525,7 +1641,7 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item high-impact reveal" data-year="2023" data-if="high">
             <div class="pub-num">9</div>
             <div class="pub-body">
                 <div class="pub-title">"Hepatocellular carcinoma incidence is decreasing in Korea but increasing in the very elderly"</div>
@@ -1537,7 +1653,7 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2022">
             <div class="pub-num">10</div>
             <div class="pub-body">
                 <div class="pub-title">"Impact of the ACOSOG Z0011 trial on surgical practice in Asian patients: trends in axillary surgery for breast cancer"</div>
@@ -1549,7 +1665,7 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2022">
             <div class="pub-num">11</div>
             <div class="pub-body">
                 <div class="pub-title">"Effects of textured food masticatory performance in older people with different dental conditions"</div>
@@ -1561,19 +1677,19 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item high-impact reveal" data-year="2022" data-if="high">
             <div class="pub-num">12</div>
             <div class="pub-body">
                 <div class="pub-title">"Favorable Impact of a Multidisciplinary Team Approach on Heart Transplantation Outcomes in a Mid-Volume Center"</div>
                 <div class="pub-meta">
                     <span class="pub-journal">Journal of Clinical Medicine</span><span>2022, 11(9), 2296</span>
-                    <span class="pub-if">IF 4.242</span>
+                    <span class="pub-if pub-if-high">IF 4.242</span>
                     <a href="https://doi.org/10.3390/jcm11092296" target="_blank" class="pub-link">DOI →</a>
                 </div>
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item high-impact reveal" data-year="2021" data-if="high">
             <div class="pub-num">13</div>
             <div class="pub-body">
                 <div class="pub-title">"Adverse Effects of Adjuvant Tamoxifen Treatment on Bone Mineral Density in Premenopausal Breast Cancer Patients: A Systematic Review and Meta-Analysis"</div>
@@ -1585,7 +1701,7 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2022">
             <div class="pub-num">14</div>
             <div class="pub-body">
                 <div class="pub-title">"Long-term renal safety between patients with chronic hepatitis B receiving tenofovir vs. entecavir therapy: A multicenter study"</div>
@@ -1597,19 +1713,19 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item high-impact reveal" data-year="2021" data-if="high">
             <div class="pub-num">15</div>
             <div class="pub-body">
                 <div class="pub-title">"Comparison of trends in axillary surgery for breast cancer between Korean and Dutch cohorts"</div>
                 <div class="pub-meta">
                     <span class="pub-journal">Annals of Surgical Oncology</span><span>Jul 2021 (preprint)</span>
-                    <span class="pub-if">IF 5.34</span>
+                    <span class="pub-if pub-if-high">IF 5.34</span>
                     <a href="https://www.researchsquare.com/article/rs-629894/v1" target="_blank" class="pub-link">DOI →</a>
                 </div>
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2021">
             <div class="pub-num">16</div>
             <div class="pub-body">
                 <div class="pub-title">"Determining the target population that would most benefit from screening for hepatic fibrosis in a primary care setting"</div>
@@ -1621,7 +1737,7 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2005">
             <div class="pub-num">17</div>
             <div class="pub-body">
                 <div class="pub-title">"Studies on Hotspots Detection for Multivariate Spatial Data Using Echelons"</div>
@@ -1632,7 +1748,7 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2004">
             <div class="pub-num">18</div>
             <div class="pub-body">
                 <div class="pub-title">"Hotspot detection for multivariate spatial data using echelons" (with Koji Kurihara)</div>
@@ -1642,7 +1758,7 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2003">
             <div class="pub-num">19</div>
             <div class="pub-body">
                 <div class="pub-title">"Detection of Hotspot areas Using Spatial Clustering Methods and Echelon Analysis"</div>
@@ -1653,7 +1769,7 @@
             </div>
         </div>
 
-        <div class="pub-item reveal">
+        <div class="pub-item reveal" data-year="2002">
             <div class="pub-num">20</div>
             <div class="pub-body">
                 <div class="pub-title">"Detection of Hotspots for Geospatial Data with Echelons Analysis based on Spatial Scan Statistics" (with Koji Kurihara)</div>
@@ -1853,43 +1969,83 @@
     </div>
     <div class="skills-grid">
         <div class="skill-card reveal">
-            <div class="skill-name">Statistical Analysis</div>
+            <div class="skill-header">
+                <div class="skill-name">Statistical Analysis</div>
+                <div class="skill-pct">95%</div>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="95"></div></div>
             <div class="skill-desc">R, SAS, SPSS, JMP — methods &amp; modeling</div>
         </div>
         <div class="skill-card reveal">
-            <div class="skill-name">Machine Learning &amp; AI</div>
+            <div class="skill-header">
+                <div class="skill-name">Machine Learning &amp; AI</div>
+                <div class="skill-pct">88%</div>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="88"></div></div>
             <div class="skill-desc">AI/ML algorithms in medical research</div>
         </div>
         <div class="skill-card reveal">
-            <div class="skill-name">Data Visualization</div>
+            <div class="skill-header">
+                <div class="skill-name">Data Visualization</div>
+                <div class="skill-pct">85%</div>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="85"></div></div>
             <div class="skill-desc">Tableau, Python (Matplotlib, Seaborn)</div>
         </div>
         <div class="skill-card reveal">
-            <div class="skill-name">Big Data</div>
+            <div class="skill-header">
+                <div class="skill-name">Big Data</div>
+                <div class="skill-pct">82%</div>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="82"></div></div>
             <div class="skill-desc">Large datasets &amp; big data technologies</div>
         </div>
         <div class="skill-card reveal">
-            <div class="skill-name">Biostatistics</div>
+            <div class="skill-header">
+                <div class="skill-name">Biostatistics</div>
+                <div class="skill-pct">96%</div>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="96"></div></div>
             <div class="skill-desc">Clinical trials &amp; epidemiology</div>
         </div>
         <div class="skill-card reveal">
-            <div class="skill-name">Six Sigma</div>
+            <div class="skill-header">
+                <div class="skill-name">Six Sigma</div>
+                <div class="skill-pct">90%</div>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="90"></div></div>
             <div class="skill-desc">Certified — process optimization (POSCO)</div>
         </div>
         <div class="skill-card reveal">
-            <div class="skill-name">Survey Design</div>
+            <div class="skill-header">
+                <div class="skill-name">Survey Design</div>
+                <div class="skill-pct">88%</div>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="88"></div></div>
             <div class="skill-desc">Large-scale design &amp; analysis</div>
         </div>
         <div class="skill-card reveal">
-            <div class="skill-name">Research Collaboration</div>
+            <div class="skill-header">
+                <div class="skill-name">Research Collaboration</div>
+                <div class="skill-pct">93%</div>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="93"></div></div>
             <div class="skill-desc">Academic &amp; clinical interdisciplinary work</div>
         </div>
         <div class="skill-card reveal">
-            <div class="skill-name">Programming</div>
+            <div class="skill-header">
+                <div class="skill-name">Programming</div>
+                <div class="skill-pct">85%</div>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="85"></div></div>
             <div class="skill-desc">Python, R, SAS, SQL</div>
         </div>
         <div class="skill-card reveal">
-            <div class="skill-name">Technical Writing</div>
+            <div class="skill-header">
+                <div class="skill-name">Technical Writing</div>
+                <div class="skill-pct">92%</div>
+            </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="92"></div></div>
             <div class="skill-desc">Papers, reports, documentation</div>
         </div>
     </div>
@@ -1934,73 +2090,205 @@
     </div>
 </nav>
 
+<!-- Back to top -->
+<button id="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
 <script>
-    // ── Top nav scroll style ──
-    const topNav = document.getElementById('topNav');
-    window.addEventListener('scroll', () => {
-        topNav.classList.toggle('light', window.scrollY > 60);
-    }, { passive: true });
+// ── Hero canvas particle animation ──
+(function() {
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [], animId;
 
-    // ── Drawer ──
-    const menuBtn = document.getElementById('menuBtn');
-    const drawer = document.getElementById('drawer');
-    const overlay = document.getElementById('drawerOverlay');
-
-    function openDrawer() {
-        drawer.classList.add('open');
-        overlay.classList.add('open');
-        menuBtn.classList.add('open');
-        document.body.style.overflow = 'hidden';
+    function resize() {
+        W = canvas.width = canvas.offsetWidth;
+        H = canvas.height = canvas.offsetHeight;
     }
 
-    function closeDrawer() {
-        drawer.classList.remove('open');
-        overlay.classList.remove('open');
-        menuBtn.classList.remove('open');
-        document.body.style.overflow = '';
+    function Particle() {
+        this.x = Math.random() * W;
+        this.y = Math.random() * H;
+        this.r = Math.random() * 1.5 + 0.5;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = (Math.random() - 0.5) * 0.3;
+        this.alpha = Math.random() * 0.5 + 0.1;
+        this.color = Math.random() > 0.6 ? '99,102,241' : Math.random() > 0.5 ? '16,185,129' : '255,255,255';
     }
 
-    menuBtn.addEventListener('click', () => {
-        drawer.classList.contains('open') ? closeDrawer() : openDrawer();
-    });
-
-    overlay.addEventListener('click', closeDrawer);
-
-    drawer.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', closeDrawer);
-    });
-
-    // ── Timeline expand/collapse ──
-    function toggleTL(btn) {
-        btn.closest('.timeline-item').classList.toggle('expanded');
+    function init() {
+        resize();
+        particles = [];
+        const count = Math.floor((W * H) / 14000);
+        for (let i = 0; i < count; i++) particles.push(new Particle());
     }
 
-    // ── Bottom nav active tab ──
-    const sections = document.querySelectorAll('section[id]');
-    const bnTabs = document.querySelectorAll('.bn-tab');
-    const dlLinks = document.querySelectorAll('#desktopLinks a');
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
+        particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0) p.x = W;
+            if (p.x > W) p.x = 0;
+            if (p.y < 0) p.y = H;
+            if (p.y > H) p.y = 0;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
+            ctx.fill();
+        });
 
-    function updateActive() {
-        let current = '';
-        sections.forEach(sec => {
-            if (window.scrollY >= sec.offsetTop - 100) {
-                current = sec.id;
+        // Draw connecting lines between nearby particles
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < 80) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(99,102,241,${0.08 * (1 - dist/80)})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
             }
-        });
-        bnTabs.forEach(t => t.classList.toggle('active', t.dataset.section === current));
-        dlLinks.forEach(l => {
-            l.classList.toggle('active', l.getAttribute('href') === '#' + current);
-        });
+        }
+        animId = requestAnimationFrame(draw);
     }
 
-    window.addEventListener('scroll', updateActive, { passive: true });
+    init();
+    draw();
+    window.addEventListener('resize', () => { cancelAnimationFrame(animId); init(); draw(); });
+})();
 
-    // ── Scroll reveal ──
-    const revealObs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+// ── Count-up animation ──
+function animateCount(el) {
+    const target = parseInt(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1200;
+    const start = performance.now();
+    function step(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(ease * target) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+}
 
-    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+// ── Scroll progress bar ──
+const progressBar = document.getElementById('progress-bar');
+function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = (scrollTop / docH * 100) + '%';
+}
+
+// ── Top nav style ──
+const topNav = document.getElementById('topNav');
+window.addEventListener('scroll', () => {
+    topNav.classList.toggle('light', window.scrollY > 60);
+    updateProgress();
+}, { passive: true });
+
+// ── Drawer ──
+const menuBtn = document.getElementById('menuBtn');
+const drawer = document.getElementById('drawer');
+const overlay = document.getElementById('drawerOverlay');
+
+function openDrawer() {
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    menuBtn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeDrawer() {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    menuBtn.classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+menuBtn.addEventListener('click', () => drawer.classList.contains('open') ? closeDrawer() : openDrawer());
+overlay.addEventListener('click', closeDrawer);
+drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+
+// ── Timeline expand ──
+function toggleTL(btn) { btn.closest('.timeline-item').classList.toggle('expanded'); }
+
+// ── Bottom nav + desktop link active state ──
+const sections = document.querySelectorAll('section[id]');
+const bnTabs = document.querySelectorAll('.bn-tab');
+const dlLinks = document.querySelectorAll('#desktopLinks a');
+
+function updateActive() {
+    let current = '';
+    sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+    });
+    bnTabs.forEach(t => t.classList.toggle('active', t.dataset.section === current));
+    dlLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+}
+window.addEventListener('scroll', updateActive, { passive: true });
+
+// ── Back to top ──
+const btt = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+
+// ── Publication filter ──
+const filterBtns = document.querySelectorAll('.pub-filter-btn');
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.pub-item').forEach(item => {
+            let show = true;
+            if (filter === 'recent') {
+                const y = parseInt(item.dataset.year || 0);
+                show = y >= 2022;
+            } else if (filter === 'high') {
+                show = item.dataset.if === 'high';
+            }
+            item.style.display = show ? '' : 'none';
+        });
+    });
+});
+
+// ── Scroll reveal + skill bars + count-up ──
+let countsStarted = false;
+let skillsAnimated = false;
+
+const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('visible');
+
+        // Trigger count-up when hero is visible
+        if (!countsStarted && e.target.closest('#about')) {
+            countsStarted = true;
+            setTimeout(() => {
+                document.querySelectorAll('[data-count]').forEach(animateCount);
+            }, 400);
+        }
+
+        // Animate skill bars
+        if (!skillsAnimated && e.target.classList.contains('skill-card')) {
+            skillsAnimated = true;
+            setTimeout(() => {
+                document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+                    bar.style.width = bar.dataset.pct + '%';
+                });
+            }, 100);
+        }
+    });
+}, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 </script>
 </body>
 </html>
