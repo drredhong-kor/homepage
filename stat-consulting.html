@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StatBridge | 통계분석 컨설팅</title>
+  <meta name="description" content="StatBridge — 학위논문 통계분석, 연구방법론 설계, 통계 교육·강의 전문 컨설팅. 홍한표 교수의 통계 전문가 서비스.">
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    // ★ EmailJS 설정값 — 가입 후 아래 3개를 교체하세요
+    const EJS_PUBLIC_KEY  = 'Muj1ks-UihbmajrUk';
+    const EJS_SERVICE_ID  = 'service_a4mj2mj';
+    const EJS_TEMPLATE_ID = 'template_hmslj2q';
+    emailjs.init({ publicKey: EJS_PUBLIC_KEY });
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Noto+Serif+KR:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0d2244;
+      --navy-mid: #163360;
+      --navy-light: #1e4080;
+      --gold: #c8973a;
+      --gold-light: #e2b05a;
+      --gold-soft: rgba(200,151,58,0.12);
+      --gold-border: rgba(200,151,58,0.3);
+      --white: #ffffff;
+      --off-white: #f8f7f4;
+      --light-gray: #f0eff0;
+      --border: #e2e0dc;
+      --text: #1a1a2e;
+      --text-sec: #4a5068;
+      --text-muted: #8890a8;
+      --shadow-sm: 0 2px 8px rgba(13,34,68,0.08);
+      --shadow-md: 0 6px 24px rgba(13,34,68,0.12);
+      --shadow-lg: 0 16px 48px rgba(13,34,68,0.16);
+      --radius: 12px;
+      --radius-lg: 20px;
+      --nav-h: 68px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 12px); }
+
+    body {
+      font-family: 'Noto Sans KR', 'Inter', -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.7;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SCROLL PROGRESS ── */
+    #progress {
+      position: fixed; top: 0; left: 0;
+      height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      z-index: 9999; transition: width 0.1s linear;
+    }
+
+    /* ── TOP NAV ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h); z-index: 900;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(13,34,68,0.96);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(200,151,58,0.2);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .nav.light {
+      background: rgba(255,255,255,0.97);
+      border-bottom-color: var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', 'Noto Serif KR', serif;
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--gold); text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo span { color: rgba(255,255,255,0.9); font-weight: 400; font-size: 0.85rem; }
+    .nav.light .nav-logo { color: var(--navy); }
+    .nav.light .nav-logo span { color: var(--text-sec); }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.78); text-decoration: none;
+      font-size: 0.875rem; font-weight: 500; letter-spacing: 0.01em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav.light .nav-links a { color: var(--text-sec); }
+    .nav.light .nav-links a:hover { color: var(--navy); }
+
+    .nav-cta {
+      background: var(--gold); color: var(--navy) !important;
+      padding: 8px 18px; border-radius: 6px;
+      font-weight: 600 !important; font-size: 0.82rem !important;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; transform: translateY(-1px); }
+
+    @media (max-width: 768px) {
+      .nav { padding: 0 20px; }
+      .nav-links { display: none; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(145deg, var(--navy) 0%, var(--navy-mid) 50%, #0a1a3a 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      padding-top: var(--nav-h);
+    }
+
+    /* Data-viz background decoration */
+    .hero-bg {
+      position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+    }
+    .hero-bg svg { position: absolute; opacity: 0.06; }
+    .hero-bg .bg-chart { right: -60px; top: 50%; transform: translateY(-50%); width: 700px; }
+    .hero-bg .bg-dots { left: -40px; bottom: -40px; width: 400px; opacity: 0.04; }
+
+    /* Animated grid lines */
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(200,151,58,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,151,58,0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 760px; text-align: center; padding: 40px 24px;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold-soft); border: 1px solid var(--gold-border);
+      color: var(--gold-light); font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 100px; margin-bottom: 28px;
+    }
+    .hero-badge::before { content: '●'; font-size: 0.5rem; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .hero h1 {
+      font-family: 'Playfair Display', 'Noto Serif KR', serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 700; color: var(--white); line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .hero h1 em {
+      font-style: normal; color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: rgba(255,255,255,0.65); margin-bottom: 36px;
+      font-weight: 300; letter-spacing: 0.01em;
+    }
+
+    .hero-actions {
+      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+
+    .btn-primary {
+      background: var(--gold); color: var(--navy);
+      padding: 14px 32px; border-radius: 8px;
+      font-weight: 700; font-size: 0.95rem; text-decoration: none;
+      transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px;
+      border: none; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,151,58,0.4); }
+
+    .btn-outline {
+      background: transparent; color: rgba(255,255,255,0.88);
+      padding: 14px 32px; border-radius: 8px;
+      font-weight: 500; font-size: 0.95rem; text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.25);
+      transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    /* Stats row */
+    .hero-stats {
+      display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.1); padding-top: 36px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; font-weight: 700; color: var(--gold);
+      display: block; line-height: 1;
+    }
+    .stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.55); margin-top: 6px; letter-spacing: 0.04em; }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 96px 24px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--gold); font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .section-label::before { content: ''; width: 24px; height: 2px; background: var(--gold); }
+
+    .section-title {
+      font-family: 'Playfair Display', 'Noto Serif KR', serif;
+      font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+      font-weight: 700; color: var(--navy); line-height: 1.3; margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 1rem; color: var(--text-sec); max-width: 580px; line-height: 1.75;
+    }
+
+    .text-center { text-align: center; }
+    .text-center .section-desc { margin: 0 auto; }
+    .text-center .section-label { justify-content: center; }
+
+    /* ── ABOUT STRIP ── */
+    .about-strip {
+      background: var(--off-white);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 60px 24px;
+    }
+    .about-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: center;
+    }
+    .about-portrait {
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+    }
+    .portrait-ring {
+      width: 160px; height: 160px; border-radius: 50%;
+      border: 3px solid var(--gold);
+      padding: 4px; background: var(--white);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .portrait-ring img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .portrait-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--navy); text-align: center;
+    }
+    .portrait-cred { font-size: 0.78rem; color: var(--text-muted); text-align: center; line-height: 1.6; }
+
+    .about-text h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; color: var(--navy); margin-bottom: 14px;
+    }
+    .about-text p { color: var(--text-sec); line-height: 1.8; margin-bottom: 18px; font-size: 0.95rem; }
+
+    .about-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      background: var(--gold-soft); border: 1px solid var(--gold-border);
+      color: var(--navy-light); font-size: 0.78rem; font-weight: 600;
+      padding: 4px 12px; border-radius: 100px;
+    }
+
+    @media (max-width: 768px) {
+      .about-inner { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+      .about-tags { justify-content: center; }
+    }
+
+    /* ── SERVICES ── */
+    .services { background: var(--white); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px; margin-top: 56px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      transition: all 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--navy), var(--gold));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.35s;
+    }
+    .service-card:hover { border-color: var(--gold-border); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px; font-size: 1.6rem;
+      box-shadow: 0 4px 16px rgba(13,34,68,0.2);
+    }
+
+    .service-title {
+      font-family: 'Playfair Display', 'Noto Serif KR', serif;
+      font-size: 1.2rem; font-weight: 700; color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .service-desc { color: var(--text-sec); font-size: 0.9rem; line-height: 1.75; margin-bottom: 20px; }
+
+    .service-list { list-style: none; }
+    .service-list li {
+      font-size: 0.85rem; color: var(--text-sec); padding: 5px 0;
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .service-list li::before {
+      content: '▸'; color: var(--gold); flex-shrink: 0; margin-top: 1px;
+    }
+
+    /* ── PROCESS ── */
+    .process { background: var(--navy); }
+    .process .section-title { color: var(--white); }
+    .process .section-desc { color: rgba(255,255,255,0.6); }
+
+    .steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2px; margin-top: 56px; position: relative;
+    }
+
+    .step {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius); padding: 32px 24px;
+      text-align: center; transition: background 0.3s;
+      position: relative;
+    }
+    .step:hover { background: rgba(255,255,255,0.09); }
+
+    .step-num {
+      width: 48px; height: 48px; border-radius: 50%;
+      border: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--gold);
+      margin: 0 auto 18px;
+    }
+
+    .step-title { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .step-desc { font-size: 0.83rem; color: rgba(255,255,255,0.55); line-height: 1.7; }
+
+    /* Arrow between steps */
+    .steps .step:not(:last-child)::after {
+      content: '→';
+      position: absolute; right: -14px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold); font-size: 1rem; opacity: 0.5;
+      z-index: 1;
+    }
+    @media (max-width: 768px) { .steps .step::after { display: none; } }
+
+    /* ── METHODS ── */
+    .methods { background: var(--off-white); }
+
+    .methods-header { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; }
+
+    .methods-tabs {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px;
+    }
+    .tab-btn {
+      padding: 7px 18px; border-radius: 100px;
+      font-size: 0.82rem; font-weight: 600; cursor: pointer;
+      border: 1px solid var(--border); background: var(--white);
+      color: var(--text-sec); transition: all 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--navy); color: var(--white); border-color: var(--navy);
+    }
+
+    .methods-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+
+    .method-chip {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 18px;
+      display: flex; align-items: flex-start; gap: 12px;
+      transition: all 0.25s;
+    }
+    .method-chip:hover { border-color: var(--gold); box-shadow: var(--shadow-sm); transform: translateY(-2px); }
+
+    .chip-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+    .chip-name { font-size: 0.83rem; font-weight: 600; color: var(--navy); line-height: 1.4; }
+    .chip-eng { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── SOFTWARE ── */
+    .software { background: var(--white); padding: 64px 24px; }
+    .sw-logos { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-top: 36px; }
+    .sw-item {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 20px 28px; border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--white); transition: all 0.25s; min-width: 100px;
+    }
+    .sw-item:hover { border-color: var(--gold-border); box-shadow: var(--shadow-sm); }
+    .sw-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 700;
+    }
+    .sw-sas { color: #1a6ea8; }
+    .sw-r { color: #2065b5; }
+    .sw-spss { color: #0037a5; }
+    .sw-py { color: #3572a5; }
+    .sw-amos { color: #cc4125; }
+    .sw-jamovi { color: #2c8a6e; }
+    .sw-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.06em; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--off-white); }
+
+    .testi-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; margin-top: 48px;
+    }
+
+    .testi-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      padding: 28px; border: 1px solid var(--border);
+      position: relative; transition: box-shadow 0.3s;
+    }
+    .testi-card:hover { box-shadow: var(--shadow-md); }
+
+    .quote-mark {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem; color: var(--gold); opacity: 0.3;
+      line-height: 0.8; margin-bottom: 12px; display: block;
+    }
+
+    .testi-text { font-size: 0.9rem; color: var(--text-sec); line-height: 1.8; margin-bottom: 20px; }
+
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), var(--navy-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: var(--gold); font-weight: 700;
+    }
+    .author-name { font-size: 0.85rem; font-weight: 700; color: var(--navy); }
+    .author-role { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* ── FAQ ── */
+    .faq { background: var(--white); }
+    .faq-list { max-width: 720px; margin: 48px auto 0; }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-q {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 0; text-align: left; gap: 16px;
+      font-family: inherit; font-size: 0.95rem; font-weight: 600;
+      color: var(--navy); transition: color 0.2s;
+    }
+    .faq-q:hover { color: var(--gold); }
+    .faq-q svg { flex-shrink: 0; transition: transform 0.3s; }
+    .faq-item.open .faq-q svg { transform: rotate(45deg); }
+
+    .faq-a {
+      font-size: 0.88rem; color: var(--text-sec); line-height: 1.8;
+      padding-bottom: 20px; display: none;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── CONTACT ── */
+    .contact { background: linear-gradient(145deg, var(--navy) 0%, var(--navy-mid) 100%); }
+    .contact .section-title { color: var(--white); }
+    .contact .section-desc { color: rgba(255,255,255,0.6); }
+
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.4fr;
+      gap: 56px; margin-top: 56px; align-items: start;
+    }
+
+    .contact-info h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; color: var(--gold); margin-bottom: 20px;
+    }
+
+    .contact-item {
+      display: flex; gap: 14px; margin-bottom: 20px; align-items: flex-start;
+    }
+    .ci-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(200,151,58,0.15); border: 1px solid var(--gold-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .ci-text { font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+    .ci-text strong { color: var(--white); display: block; font-size: 0.85rem; }
+
+    .contact-form {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg); padding: 36px;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 18px; }
+    .form-label {
+      display: block; font-size: 0.78rem; font-weight: 600;
+      color: rgba(255,255,255,0.65); margin-bottom: 7px; letter-spacing: 0.04em;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%; padding: 12px 16px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px; color: var(--white);
+      font-family: inherit; font-size: 0.88rem;
+      transition: border-color 0.2s; outline: none;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.3); }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--gold);
+    }
+    .form-select { cursor: pointer; }
+    .form-select option { background: var(--navy); color: var(--white); }
+    .form-textarea { resize: vertical; min-height: 120px; }
+
+    .form-submit {
+      width: 100%; padding: 14px;
+      background: var(--gold); color: var(--navy);
+      border: none; border-radius: 8px;
+      font-family: inherit; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: all 0.25s;
+      margin-top: 4px;
+    }
+    .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,151,58,0.35); }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #08172e; padding: 32px 24px;
+      text-align: center;
+    }
+    .footer-text { font-size: 0.8rem; color: rgba(255,255,255,0.35); line-height: 2; }
+    .footer-text a { color: var(--gold); text-decoration: none; }
+
+    /* ── SCROLL TO TOP ── */
+    #scroll-top {
+      position: fixed; bottom: 28px; right: 24px;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--gold); color: var(--navy);
+      border: none; cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-md); opacity: 0; pointer-events: none;
+      transition: opacity 0.3s, transform 0.25s;
+      z-index: 800;
+    }
+    #scroll-top.visible { opacity: 1; pointer-events: all; }
+    #scroll-top:hover { transform: translateY(-3px); }
+
+    /* ── MOBILE NAV ── */
+    .mobile-nav {
+      display: none; position: fixed; bottom: 0; left: 0; right: 0;
+      background: rgba(13,34,68,0.97); backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(200,151,58,0.2);
+      padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+      z-index: 900;
+    }
+    .mobile-nav-inner { display: flex; justify-content: space-around; }
+    .mobile-nav-item {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 3px; text-decoration: none; padding: 6px 12px;
+      color: rgba(255,255,255,0.55); font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .mobile-nav-item:hover, .mobile-nav-item.active { color: var(--gold); }
+    .mobile-nav-item svg { width: 20px; height: 20px; }
+
+    @media (max-width: 768px) {
+      .mobile-nav { display: block; }
+      body { padding-bottom: 64px; }
+      section { padding: 64px 20px; }
+    }
+
+    /* ── ANIMATE ON SCROLL ── */
+    .fade-in {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div id="progress"></div>
+
+<!-- Top Navigation -->
+<nav class="nav" id="top-nav">
+  <a href="#home" class="nav-logo">
+    StatBridge
+    <span>Hanpyo Hong, Ph.D.</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">서비스</a></li>
+    <li><a href="#methods">분석방법</a></li>
+    <li><a href="#process">진행절차</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact" class="nav-cta">상담 신청</a></li>
+  </ul>
+</nav>
+
+<!-- ──────────────────────── HERO ──────────────────────── -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <!-- Chart SVG background -->
+    <svg class="bg-chart" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+      <polyline points="0,350 80,280 160,310 240,180 320,220 400,100 480,150 560,80" fill="none" stroke="#c8973a" stroke-width="3"/>
+      <circle cx="80" cy="280" r="5" fill="#c8973a"/>
+      <circle cx="240" cy="180" r="5" fill="#c8973a"/>
+      <circle cx="400" cy="100" r="5" fill="#c8973a"/>
+      <line x1="0" y1="50" x2="600" y2="50" stroke="white" stroke-width="0.5" stroke-dasharray="4"/>
+      <line x1="0" y1="150" x2="600" y2="150" stroke="white" stroke-width="0.5" stroke-dasharray="4"/>
+      <line x1="0" y1="250" x2="600" y2="250" stroke="white" stroke-width="0.5" stroke-dasharray="4"/>
+      <line x1="0" y1="350" x2="600" y2="350" stroke="white" stroke-width="0.5" stroke-dasharray="4"/>
+      <!-- Bar chart -->
+      <rect x="40" y="300" width="30" height="50" fill="#c8973a" opacity="0.4"/>
+      <rect x="90" y="250" width="30" height="100" fill="#c8973a" opacity="0.4"/>
+      <rect x="140" y="220" width="30" height="130" fill="#c8973a" opacity="0.5"/>
+      <rect x="190" y="180" width="30" height="170" fill="#c8973a" opacity="0.6"/>
+      <rect x="240" y="200" width="30" height="150" fill="#c8973a" opacity="0.5"/>
+    </svg>
+    <!-- Dot grid -->
+    <svg class="bg-dots" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.5" fill="white"/>
+      </pattern>
+      <rect width="300" height="300" fill="url(#dots)"/>
+    </svg>
+  </div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">데이터와 연구자를 잇는 통계 전문 컨설팅</div>
+
+    <h1>
+      데이터가 말하는<br>
+      <em>진실을 찾아드립니다</em>
+    </h1>
+    <p class="hero-sub">
+      학위논문부터 연구 프로젝트까지 — 올바른 통계로 논문을 완성하세요
+    </p>
+
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        무료 상담 신청
+      </a>
+      <a href="#services" class="btn-outline">
+        서비스 알아보기
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">500+</span>
+        <div class="stat-label">완료 프로젝트</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">15+</span>
+        <div class="stat-label">컨설팅 경력(년)</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">98%</span>
+        <div class="stat-label">고객 만족도</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">30+</span>
+        <div class="stat-label">분석 기법</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────── ABOUT ──────────────────────── -->
+<div class="about-strip fade-in">
+  <div class="about-inner">
+    <div class="about-portrait">
+      <div class="portrait-ring">
+        <img src="unnamed.jpg" alt="홍한표 교수" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0d2244,#1e4080);border-radius:50%;font-size:3rem;\'>👨‍🏫</div>'">
+      </div>
+      <div class="portrait-name">홍한표 교수</div>
+      <div class="portrait-cred">Ph.D. · 통계학<br>의학통계 / 빅데이터분석 전문가</div>
+    </div>
+    <div class="about-text">
+      <h3>데이터 뒤에 숨겨진 의미를 함께 발견합니다</h3>
+      <p>
+        오랜 교육·연구 경험을 바탕으로, 석·박사 학위논문 및 SCI(E)·KCI 학술논문의 통계분석을 전문적으로 지원합니다.
+        의학, 보건학, 교육학, 영양학 등 다양한 분야에서 연구 목적에 맞는 올바른 분석 방법 선택부터
+        결과 해석·논문 작성까지 전 과정을 함께합니다.
+      </p>
+      <p>
+        특히 국민건강보험공단(NHIS), 건강보험심사평가원(HIRA), 질병관리청 국민건강영양조사 등
+        국가 빅데이터 분석에 풍부한 경험을 보유하고 있으며, SEM·다층모형(HLM)·생존분석 등
+        고급 통계기법부터 기초 기술통계까지 연구자 수준에 맞춰 맞춤형 컨설팅을 제공합니다.
+      </p>
+      <div class="about-tags">
+        <span class="tag">NHIS 빅데이터</span>
+        <span class="tag">HIRA 데이터</span>
+        <span class="tag">국민건강영양조사</span>
+        <span class="tag">의학통계</span>
+        <span class="tag">보건학</span>
+        <span class="tag">교육학</span>
+        <span class="tag">영양학</span>
+        <span class="tag">구조방정식(SEM)</span>
+        <span class="tag">다층모형(HLM)</span>
+        <span class="tag">매개·조절효과</span>
+        <span class="tag">생존분석</span>
+        <span class="tag">R / SAS / SPSS</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────── SERVICES ──────────────────────── -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="text-center fade-in">
+      <div class="section-label">Services</div>
+      <h2 class="section-title">제공 서비스</h2>
+      <p class="section-desc">연구의 처음부터 완성까지, 각 단계에 맞는 전문 컨설팅을 제공합니다.</p>
+    </div>
+
+    <div class="services-grid">
+
+      <!-- 서비스 1: 학위논문 통계분석 -->
+      <div class="service-card fade-in">
+        <div class="service-icon">📊</div>
+        <div class="service-title">학위논문 통계분석</div>
+        <p class="service-desc">
+          석·박사 학위논문의 데이터 분석을 처음부터 끝까지 지원합니다.
+          연구 가설에 맞는 적절한 분석방법을 선정하고, 결과 해석 및 논문 서술까지 도와드립니다.
+        </p>
+        <ul class="service-list">
+          <li>연구 가설에 적합한 분석 방법 선정</li>
+          <li>SPSS·R·Amos·Python 활용 분석 실행</li>
+          <li>분석 결과표 작성 및 해석</li>
+          <li>논문 통계 챕터 서술 지원</li>
+          <li>심사위원 질의 대비 피드백</li>
+        </ul>
+      </div>
+
+      <!-- 서비스 2: SCI(E)/KCI 논문 통계분석 -->
+      <div class="service-card fade-in">
+        <div class="service-icon">📝</div>
+        <div class="service-title">SCI(E) / KCI 논문 통계분석</div>
+        <p class="service-desc">
+          국내외 학술지 투고를 위한 논문 통계분석을 지원합니다.
+          저널별 요구 기준에 맞는 분석 방법 선정과 심사 과정의 리뷰어 코멘트 대응까지 함께합니다.
+        </p>
+        <ul class="service-list">
+          <li>SCI·SCIE·SSCI 저널 투고 기준 분석 지원</li>
+          <li>KCI 등재지 논문 통계 분석 및 서술</li>
+          <li>APA·AMA 등 저널별 표 형식 작성</li>
+          <li>리뷰어 코멘트 대응 추가 분석</li>
+          <li>공동연구·교신저자 협력 가능</li>
+        </ul>
+      </div>
+
+      <!-- 서비스 3: 통계 교육·강의 -->
+      <div class="service-card fade-in">
+        <div class="service-icon">🎓</div>
+        <div class="service-title">통계 교육·강의</div>
+        <p class="service-desc">
+          개인 또는 그룹을 대상으로 연구자 맞춤형 통계 교육을 제공합니다.
+          통계 소프트웨어 사용법부터 고급 분석 기법까지, 실습 중심으로 가르칩니다.
+        </p>
+        <ul class="service-list">
+          <li>1:1 맞춤 통계 교육 (초급~고급)</li>
+          <li>R·SPSS·Python 실습 강의</li>
+          <li>구조방정식·다층모형 전문 강의</li>
+          <li>소그룹 워크숍 (2~10인)</li>
+          <li>기관/대학원 출강 가능</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────── METHODS ──────────────────────── -->
+<section class="methods" id="methods">
+  <div class="container">
+    <div class="methods-header">
+      <div class="fade-in">
+        <div class="section-label">Analysis Methods</div>
+        <h2 class="section-title">분석 방법론</h2>
+        <p class="section-desc">연구 목적에 최적화된 30가지 이상의 통계 기법을 활용합니다.</p>
+      </div>
+    </div>
+
+    <div class="methods-grid fade-in">
+      <div class="method-chip">
+        <span class="chip-icon">📈</span>
+        <div>
+          <div class="chip-name">기술통계</div>
+          <div class="chip-eng">Descriptive Statistics</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">🔗</span>
+        <div>
+          <div class="chip-name">상관분석</div>
+          <div class="chip-eng">Correlation Analysis</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">📉</span>
+        <div>
+          <div class="chip-name">회귀분석</div>
+          <div class="chip-eng">Regression Analysis</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">⚖️</span>
+        <div>
+          <div class="chip-name">분산분석</div>
+          <div class="chip-eng">ANOVA / ANCOVA</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">🕸️</span>
+        <div>
+          <div class="chip-name">구조방정식</div>
+          <div class="chip-eng">SEM / Path Analysis</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">🔀</span>
+        <div>
+          <div class="chip-name">매개효과분석</div>
+          <div class="chip-eng">Mediation Analysis</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">🔧</span>
+        <div>
+          <div class="chip-name">조절효과분석</div>
+          <div class="chip-eng">Moderation Analysis</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">🏗️</span>
+        <div>
+          <div class="chip-name">다층모형</div>
+          <div class="chip-eng">HLM / MLM</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">🧪</span>
+        <div>
+          <div class="chip-name">탐색적 요인분석</div>
+          <div class="chip-eng">EFA</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">✅</span>
+        <div>
+          <div class="chip-name">확인적 요인분석</div>
+          <div class="chip-eng">CFA</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">📦</span>
+        <div>
+          <div class="chip-name">군집분석</div>
+          <div class="chip-eng">Cluster Analysis</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">🎯</span>
+        <div>
+          <div class="chip-name">판별분석</div>
+          <div class="chip-eng">Discriminant Analysis</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">📊</span>
+        <div>
+          <div class="chip-name">로지스틱 회귀분석</div>
+          <div class="chip-eng">Logistic Regression</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">🔄</span>
+        <div>
+          <div class="chip-name">반복측정 분산분석</div>
+          <div class="chip-eng">Repeated Measures</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">🌐</span>
+        <div>
+          <div class="chip-name">잠재프로파일분석</div>
+          <div class="chip-eng">LPA / LCA</div>
+        </div>
+      </div>
+      <div class="method-chip">
+        <span class="chip-icon">📋</span>
+        <div>
+          <div class="chip-name">검정력 분석</div>
+          <div class="chip-eng">Power Analysis</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────── SOFTWARE ──────────────────────── -->
+<section class="software fade-in">
+  <div class="container">
+    <div class="text-center">
+      <div class="section-label">Tools</div>
+      <h2 class="section-title" style="font-size:1.5rem;">활용 통계 소프트웨어</h2>
+    </div>
+    <div class="sw-logos">
+      <div class="sw-item">
+        <div class="sw-logo-text sw-sas">SAS</div>
+        <div class="sw-label">SAS</div>
+      </div>
+      <div class="sw-item">
+        <div class="sw-logo-text sw-r">R</div>
+        <div class="sw-label">R Studio</div>
+      </div>
+      <div class="sw-item">
+        <div class="sw-logo-text sw-spss">SPSS</div>
+        <div class="sw-label">IBM SPSS</div>
+      </div>
+      <div class="sw-item">
+        <div class="sw-logo-text sw-amos">Amos</div>
+        <div class="sw-label">IBM Amos</div>
+      </div>
+      <div class="sw-item">
+        <div class="sw-logo-text sw-py">Py</div>
+        <div class="sw-label">Python</div>
+      </div>
+      <div class="sw-item">
+        <div class="sw-logo-text sw-jamovi">jamovi</div>
+        <div class="sw-label">jamovi</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────── PROCESS ──────────────────────── -->
+<section class="process" id="process">
+  <div class="container">
+    <div class="text-center fade-in">
+      <div class="section-label" style="color:var(--gold);">Process</div>
+      <h2 class="section-title">컨설팅 진행 절차</h2>
+      <p class="section-desc">문의부터 최종 납품까지 4단계로 체계적으로 진행됩니다.</p>
+    </div>
+
+    <div class="steps fade-in">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">초기 상담</div>
+        <p class="step-desc">연구 주제와 데이터 현황을 파악하고, 적합한 분석 방향을 안내합니다.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">방법론 설계</div>
+        <p class="step-desc">연구 가설과 데이터에 맞는 최적의 통계 분석 방법을 선정합니다.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">분석 실행</div>
+        <p class="step-desc">선정된 방법으로 분석을 수행하고 결과표 및 해석 자료를 제공합니다.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title">검토·수정</div>
+        <p class="step-desc">심사 의견 반영, 추가 분석, 논문 수정 등 완성까지 지속 지원합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────── TESTIMONIALS ──────────────────────── -->
+<section class="testimonials">
+  <div class="container">
+    <div class="text-center fade-in">
+      <div class="section-label">Reviews</div>
+      <h2 class="section-title">고객 후기</h2>
+      <p class="section-desc">컨설팅을 받으신 분들의 생생한 경험을 공유합니다.</p>
+    </div>
+
+    <div class="testi-grid fade-in">
+      <div class="testi-card">
+        <span class="quote-mark">"</span>
+        <p class="testi-text">구조방정식 모형을 처음 접해 막막했는데, 교수님께서 개념부터 분석 실행까지 단계별로 차근차근 설명해 주셨습니다. 덕분에 심사위원들 앞에서 자신감 있게 발표할 수 있었어요. 최종 통과 감사합니다!</p>
+        <div class="testi-author">
+          <div class="author-avatar">김</div>
+          <div>
+            <div class="author-name">김○○ 박사</div>
+            <div class="author-role">교육학 박사 학위 취득</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <span class="quote-mark">"</span>
+        <p class="testi-text">데이터는 있는데 어떤 분석 방법을 써야 할지 몰랐습니다. 교수님께서 연구 가설에 맞는 적절한 방법을 찾아주시고, 결과 해석까지 꼼꼼히 도와주셨습니다. 논문이 우수논문으로 선정되어 너무 기쁩니다.</p>
+        <div class="testi-author">
+          <div class="author-avatar">이</div>
+          <div>
+            <div class="author-name">이○○ 석사</div>
+            <div class="author-role">경영학 석사, 우수논문상 수상</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <span class="quote-mark">"</span>
+        <p class="testi-text">기관에서 연구보고서 작성을 위해 통계 컨설팅을 의뢰했는데, 복잡한 패널 데이터 분석을 신속하고 정확하게 처리해 주셨습니다. 결과 보고서 해설도 비전문가도 이해할 수 있게 명확히 작성해 주셔서 만족합니다.</p>
+        <div class="testi-author">
+          <div class="author-avatar">박</div>
+          <div>
+            <div class="author-name">박○○ 연구원</div>
+            <div class="author-role">공공기관 정책연구팀</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────── FAQ ──────────────────────── -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="text-center fade-in">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">자주 묻는 질문</h2>
+    </div>
+
+    <div class="faq-list fade-in">
+
+      <div class="faq-item">
+        <button class="faq-q">
+          통계를 전혀 모르는데 컨설팅이 가능한가요?
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">
+          물론입니다. 통계를 처음 접하시는 분들도 충분히 이해하실 수 있도록 기초 개념부터 차근차근 설명해 드립니다. 단순히 결과를 제공하는 것이 아니라, 연구자 스스로 이해하고 발표·심사에 자신감을 가질 수 있도록 지원하는 것을 목표로 합니다.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          데이터 수집 전 단계에서도 상담이 가능한가요?
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">
+          네, 오히려 연구 시작 단계에서 컨설팅을 받으시는 것이 훨씬 효율적입니다. 설문지 설계, 표본 규모 산정, 측정 도구 선정 등 연구방법론 전반에 대한 사전 컨설팅이 가능하며, 이 단계에서 올바른 설계가 이루어져야 의미 있는 분석이 가능합니다.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          어떤 분야의 논문 컨설팅을 지원하시나요?
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">
+          교육학, 심리학, 경영학, 사회복지학, 간호학, 체육학, 행정학, 보건학, 유아교육학 등 사회과학 전반의 양적 연구를 주로 지원합니다. 다양한 학문 분야의 연구 경험을 보유하고 있으므로, 분야와 관계없이 문의해 주시면 적절한 안내를 드리겠습니다.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          컨설팅 소요 기간은 얼마나 되나요?
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">
+          프로젝트의 복잡도와 범위에 따라 다르지만, 기본적인 학위논문 통계분석은 보통 3~7일 내 완료됩니다. 구조방정식이나 다층모형 등 복잡한 분석이 포함된 경우 1~2주가 소요될 수 있습니다. 급한 일정이 있으신 경우 초기 상담 시 말씀해 주시면 일정을 협의해 드립니다.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          비대면(온라인) 컨설팅도 가능한가요?
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">
+          네, 화상회의(Zoom, Google Meet)를 통한 비대면 컨설팅을 기본으로 진행합니다. 지역에 관계없이 전국 어디서나 상담을 받으실 수 있으며, 필요한 경우 대면 상담도 별도 협의가 가능합니다.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          분석 결과물은 어떤 형태로 제공되나요?
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">
+          분석 결과표(APA 형식), 해석 보고서, 통계 분석 파일(원본)을 함께 제공합니다. 논문에 바로 사용할 수 있도록 표와 그래프를 정리해 드리며, 심사위원 질의에 대비한 추가 설명 자료도 제공해 드립니다.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────── CONTACT ──────────────────────── -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="text-center fade-in">
+      <div class="section-label" style="color:var(--gold);">Contact</div>
+      <h2 class="section-title">상담 신청</h2>
+      <p class="section-desc">첫 상담은 무료입니다. 연구에 대해 편하게 말씀해 주세요.</p>
+    </div>
+
+    <div class="contact-grid fade-in">
+      <div class="contact-info">
+        <h4>연락처 정보</h4>
+
+        <div class="contact-item">
+          <div class="ci-icon">📧</div>
+          <div class="ci-text">
+            <strong>이메일</strong>
+            <a href="mailto:stathong558@gmail.com" style="color:rgba(255,255,255,0.7); text-decoration:none;">stathong558@gmail.com</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="ci-icon">💬</div>
+          <div class="ci-text">
+            <strong>카카오톡 오픈채팅</strong>
+            빠른 상담 및 일정 조율
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="ci-icon">🎥</div>
+          <div class="ci-text">
+            <strong>화상 상담</strong>
+            Zoom · Google Meet<br>
+            <span style="font-size:0.78rem;">평일 오전 10시 — 오후 6시</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="ci-icon">⏱️</div>
+          <div class="ci-text">
+            <strong>응답 시간</strong>
+            문의 후 24시간 이내 회신
+          </div>
+        </div>
+
+        <div style="margin-top:28px; padding:20px; background:rgba(200,151,58,0.1); border:1px solid rgba(200,151,58,0.25); border-radius:10px;">
+          <div style="font-size:0.8rem; color:var(--gold); font-weight:700; margin-bottom:8px;">✓ 첫 상담 무료 안내</div>
+          <div style="font-size:0.82rem; color:rgba(255,255,255,0.6); line-height:1.7;">
+            초기 상담(10분)은 무료로 진행됩니다.<br>
+            연구 주제와 현재 상황을 말씀해 주시면<br>
+            최적의 컨설팅 방향을 안내해 드립니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <form id="consulting-form" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">이름 *</label>
+              <input type="text" id="f-name" class="form-input" placeholder="홍길동" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">연락처 *</label>
+              <input type="tel" id="f-phone" class="form-input" placeholder="010-0000-0000" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">이메일 *</label>
+            <input type="email" id="f-email" class="form-input" placeholder="example@email.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">서비스 유형 *</label>
+            <select id="f-service" class="form-select form-input" required>
+              <option value="" disabled selected>서비스를 선택하세요</option>
+              <option>학위논문 통계분석 (석사)</option>
+              <option>학위논문 통계분석 (박사)</option>
+              <option>연구방법론 설계</option>
+              <option>통계 교육·강의</option>
+              <option>학술논문 통계분석</option>
+              <option>기관 연구 프로젝트</option>
+              <option>기타</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">연구 분야</label>
+            <input type="text" id="f-field" class="form-input" placeholder="예: 교육학, 경영학, 심리학 등">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">문의 내용 *</label>
+            <textarea id="f-message" class="form-textarea" placeholder="연구 주제, 현재 단계, 필요한 분석 등을 간략히 설명해 주세요." required></textarea>
+          </div>
+
+          <button type="submit" class="form-submit" id="submit-btn">상담 신청하기 →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────── FOOTER ──────────────────────── -->
+<footer>
+  <div class="footer-text">
+    <div style="margin-bottom:8px;">
+      <a href="index.html">홍한표 교수 홈페이지</a>
+      &nbsp;·&nbsp;
+      <a href="#home">StatBridge</a>
+      &nbsp;·&nbsp;
+      <a href="#contact">상담 신청</a>
+    </div>
+    © 2026 StatBridge · Hanpyo Hong, Ph.D. · 통계분석 및 연구방법론 컨설팅
+  </div>
+</footer>
+
+<!-- ──────────────────────── MOBILE BOTTOM NAV ──────────────────────── -->
+<nav class="mobile-nav">
+  <div class="mobile-nav-inner">
+    <a href="#home" class="mobile-nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      홈
+    </a>
+    <a href="#services" class="mobile-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="6" height="6"/><rect x="2" y="15" width="6" height="6"/><rect x="14" y="3" width="6" height="6"/><rect x="14" y="15" width="6" height="6"/></svg>
+      서비스
+    </a>
+    <a href="#methods" class="mobile-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      분석
+    </a>
+    <a href="#faq" class="mobile-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      FAQ
+    </a>
+    <a href="#contact" class="mobile-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      상담
+    </a>
+  </div>
+</nav>
+
+<!-- Scroll to top -->
+<button id="scroll-top" onclick="scrollTo({top:0,behavior:'smooth'})" title="맨 위로">▲</button>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const p = document.getElementById('progress');
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    p.style.width = pct + '%';
+
+    // Nav style
+    const nav = document.getElementById('top-nav');
+    nav.classList.toggle('light', window.scrollY > 60);
+
+    // Scroll-to-top visibility
+    document.getElementById('scroll-top').classList.toggle('visible', window.scrollY > 400);
+
+    // Active mobile nav
+    const sections = ['home','services','methods','faq','contact'];
+    let active = 'home';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 100) active = id;
+    });
+    document.querySelectorAll('.mobile-nav-item').forEach((el, i) => {
+      el.classList.toggle('active', sections[i] === active);
+    });
+  });
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  // Contact form — EmailJS 전송
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = '전송 중...';
+    btn.disabled = true;
+
+    const params = {
+      from_name:    document.getElementById('f-name').value,
+      from_phone:   document.getElementById('f-phone').value,
+      from_email:   document.getElementById('f-email').value,
+      service_type: document.getElementById('f-service').value,
+      research_field: document.getElementById('f-field').value,
+      message:      document.getElementById('f-message').value,
+    };
+
+    emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, params)
+      .then(() => {
+        btn.textContent = '✓ 신청이 완료되었습니다!';
+        btn.style.background = '#10b981';
+        document.getElementById('consulting-form').reset();
+        setTimeout(() => {
+          btn.textContent = '상담 신청하기 →';
+          btn.style.background = '';
+          btn.disabled = false;
+        }, 4000);
+      })
+      .catch((err) => {
+        console.error('EmailJS 오류:', err);
+        btn.textContent = '전송 실패 — 다시 시도해 주세요';
+        btn.style.background = '#ef4444';
+        btn.disabled = false;
+        setTimeout(() => {
+          btn.textContent = '상담 신청하기 →';
+          btn.style.background = '';
+        }, 3000);
+      });
+  }
+
+  // Animate stat numbers
+  function animateNum(el, target, suffix = '') {
+    let start = 0;
+    const duration = 1800;
+    const step = (ts) => {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      const val = Math.floor(progress * target);
+      el.textContent = val + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target + suffix;
+    };
+    requestAnimationFrame(step);
+  }
+
+  const statsObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const nums = [
+          { el: document.querySelectorAll('.stat-num')[0], val: 500, suffix: '+' },
+          { el: document.querySelectorAll('.stat-num')[1], val: 15, suffix: '+' },
+          { el: document.querySelectorAll('.stat-num')[2], val: 98, suffix: '%' },
+          { el: document.querySelectorAll('.stat-num')[3], val: 30, suffix: '+' },
+        ];
+        nums.forEach(n => { if(n.el) animateNum(n.el, n.val, n.suffix); });
+        statsObs.disconnect();
+      }
+    });
+  }, { threshold: 0.4 });
+  const heroStats = document.querySelector('.hero-stats');
+  if (heroStats) statsObs.observe(heroStats);
+</script>
+</body>
+</html>
