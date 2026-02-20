@@ -84,9 +84,13 @@
       color: var(--gold); text-decoration: none;
       display: flex; align-items: center; gap: 10px;
     }
+    .nav-logo-img {
+      height: 30px; border-radius: 5px;
+      background: white; padding: 2px 6px;
+    }
     .nav-logo span { color: rgba(255,255,255,0.9); font-weight: 400; font-size: 0.85rem; }
-    .nav.light .nav-logo { color: var(--navy); }
     .nav.light .nav-logo span { color: var(--text-sec); }
+    .nav.light .nav-logo-img { padding: 0; background: transparent; }
 
     .nav-links {
       display: flex; align-items: center; gap: 28px;
@@ -614,7 +618,7 @@
 <!-- Top Navigation -->
 <nav class="nav" id="top-nav">
   <a href="#home" class="nav-logo">
-    StatBridge
+    <img src="stat_bridge_logo.jpg" alt="StatBridge" class="nav-logo-img">
     <span>Hanpyo Hong, Ph.D.</span>
   </a>
   <ul class="nav-links">
