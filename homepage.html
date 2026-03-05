@@ -3,220 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hanpyo Hong, Ph.D. · Research Professor in Biostatistics</title>
-
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Hanpyo Hong, Ph.D. — Research Professor at Pusan National University Yangsan Hospital. Expert in Biostatistics, Medical AI/ML, PISA data analysis, and clinical research.">
-    <meta name="keywords" content="Hanpyo Hong, 홍한표, Biostatistics, Research Professor, PNUH, Statistics, Medical AI, PISA, Clinical Research">
-    <meta name="author" content="Hanpyo Hong">
-    <meta name="robots" content="index, follow">
-
-    <!-- Open Graph (SNS 공유용) -->
-    <meta property="og:type" content="profile">
-    <meta property="og:title" content="Hanpyo Hong, Ph.D. · Research Professor in Biostatistics">
-    <meta property="og:description" content="Research Professor at Pusan National University Yangsan Hospital. Expert in Biostatistics, Medical AI/ML, and large-scale data analysis.">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="https://ui-avatars.com/api/?name=Hanpyo+Hong&size=400&background=1a3a6b&color=fff&bold=true">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Hanpyo Hong, Ph.D. · Research Professor">
-    <meta name="twitter:description" content="Biostatistics · Medical AI · Large-Scale Data Analysis · PNUH">
-
-    <!-- Pretendard Font -->
+    <title>Hanpyo Hong, Ph.D. · Research Professor</title>
+    <!-- Pretendard Variable font (clean and readable) -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
-
     <style>
-        :root {
-            --blue: #1a4fa0;
-            --blue-light: #2563eb;
-            --blue-pale: #dbeafe;
-            --navy: #0f172a;
-            --slate: #334155;
-            --muted: #64748b;
-            --border: #e2e8f0;
-            --bg: #f8fafc;
-            --white: #ffffff;
-            --radius: 1.2rem;
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
-            --shadow-md: 0 8px 24px rgba(26,79,160,0.12);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; }
 
         body {
             font-family: "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-            background-color: var(--bg);
-            color: var(--navy);
+            background-color: #f8fafc;
+            color: #1e293b;
             line-height: 1.6;
         }
 
-        /* ── Sticky Top Navigation ── */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            padding: 0 1.5rem;
-        }
-
-        .nav-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 56px;
-            gap: 1rem;
-        }
-
-        .nav-brand {
-            font-weight: 700;
-            font-size: 1rem;
-            color: var(--blue);
-            white-space: nowrap;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 0.2rem;
-            list-style: none;
-            flex-wrap: wrap;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--slate);
-            font-size: 0.85rem;
-            font-weight: 500;
-            padding: 0.35rem 0.75rem;
-            border-radius: 40px;
-            transition: 0.15s ease;
-        }
-
-        .nav-links a:hover {
-            background: var(--blue-pale);
-            color: var(--blue);
-        }
-
-        /* ── Container ── */
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 2rem 1.5rem;
         }
 
-        /* ── Profile Header ── */
+        /* Header section with profile photo */
         .profile-header {
             display: flex;
             flex-wrap: wrap;
             gap: 2rem;
             align-items: center;
-            background: linear-gradient(135deg, #1a4fa015, #2563eb08);
+            background: linear-gradient(135deg, #2563eb10, #0f172a05);
             border-radius: 2rem;
             padding: 2.5rem 2rem;
             margin-bottom: 2.5rem;
-            border: 1px solid #c7d9f5;
-            box-shadow: var(--shadow-md);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .profile-header::before {
-            content: '';
-            position: absolute;
-            top: -60px; right: -60px;
-            width: 220px; height: 220px;
-            background: radial-gradient(circle, #2563eb18, transparent 70%);
-            pointer-events: none;
-        }
-
-        .profile-photo-wrap {
-            position: relative;
-            flex-shrink: 0;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -2px rgba(0,0,0,0.05);
         }
 
         .profile-photo {
+            flex-shrink: 0;
             width: 180px;
             height: 180px;
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid white;
-            box-shadow: 0 12px 32px rgba(26,79,160,0.25);
-            display: block;
+            box-shadow: 0 10px 25px -5px rgba(37,99,235,0.3);
         }
 
-        .profile-photo-badge {
-            position: absolute;
-            bottom: 6px; right: 6px;
-            background: var(--blue-light);
-            color: white;
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 0.2rem 0.5rem;
-            border-radius: 40px;
-            border: 2px solid white;
-            letter-spacing: 0.04em;
+        .profile-info {
+            flex: 1;
+            min-width: 300px;
         }
-
-        .profile-info { flex: 1; min-width: 280px; }
 
         .name {
             font-size: 2.8rem;
-            font-weight: 750;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
             margin-bottom: 0.5rem;
-            color: var(--navy);
+            color: #0f172a;
         }
 
         .title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 400;
-            color: var(--slate);
-            margin-bottom: 0.8rem;
+            color: #334155;
+            margin-bottom: 1rem;
         }
 
         .affiliation {
-            font-size: 1rem;
-            color: var(--blue);
-            font-weight: 600;
-            margin-bottom: 1.2rem;
-            line-height: 1.5;
-        }
-
-        .contact-links {
-            display: flex;
-            gap: 0.6rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 40px;
-            padding: 0.3rem 0.9rem;
-            font-size: 0.82rem;
+            font-size: 1.1rem;
+            color: #2563eb;
             font-weight: 500;
-            color: var(--slate);
-            text-decoration: none;
-            transition: 0.15s ease;
-        }
-
-        .contact-chip:hover {
-            border-color: var(--blue-light);
-            color: var(--blue);
-            box-shadow: 0 2px 8px rgba(37,99,235,0.12);
+            margin-bottom: 1.5rem;
         }
 
         .stats-grid {
@@ -225,41 +84,40 @@
             gap: 2rem;
             margin-top: 1.5rem;
             padding-top: 1.5rem;
-            border-top: 1px dashed #c7d9f5;
+            border-top: 1px dashed #cbd5e1;
         }
 
-        .stat-item { display: flex; flex-direction: column; }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
 
         .stat-number {
             font-size: 2rem;
-            font-weight: 750;
-            color: var(--blue);
-            line-height: 1.1;
+            font-weight: 700;
+            color: #2563eb;
+            line-height: 1.2;
         }
 
         .stat-label {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--muted);
-            font-weight: 500;
+            letter-spacing: 0.03em;
+            color: #475569;
         }
 
-        /* ── Section titles ── */
+        /* Common section styles */
         .section-title {
-            font-size: 1.65rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 650;
             letter-spacing: -0.02em;
-            margin: 2.5rem 0 1.2rem 0;
+            margin: 2.5rem 0 1.5rem 0;
             padding-bottom: 0.5rem;
-            border-bottom: 3px solid #c7d9f5;
-            color: var(--navy);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            border-bottom: 3px solid #2563eb20;
+            color: #0f172a;
         }
 
-        /* ── Cards ── */
+        /* Card grid */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -267,46 +125,43 @@
         }
 
         .card {
-            background: var(--white);
-            border-radius: var(--radius);
+            background: white;
+            border-radius: 1.2rem;
             padding: 1.5rem;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+            border: 1px solid #e9eef2;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            transition: 0.15s ease;
         }
 
         .card:hover {
-            transform: translateY(-2px);
-            border-color: #93c5fd;
-            box-shadow: var(--shadow-md);
+            border-color: #2563eb40;
+            box-shadow: 0 8px 20px -8px rgba(37,99,235,0.15);
         }
 
         .card-date {
-            font-size: 0.82rem;
-            color: var(--blue-light);
-            font-weight: 600;
+            font-size: 0.85rem;
+            color: #2563eb;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
             margin-bottom: 0.5rem;
         }
 
         .card-title {
             font-weight: 650;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin-bottom: 0.4rem;
-            color: var(--navy);
-            line-height: 1.4;
+            color: #0f172a;
         }
 
         .card-sub {
-            color: var(--muted);
-            font-size: 0.92rem;
+            color: #475569;
+            font-size: 0.95rem;
             margin-bottom: 0.8rem;
         }
 
         .card-desc {
-            font-size: 0.88rem;
-            color: #475569;
+            font-size: 0.9rem;
+            color: #64748b;
             list-style: none;
             padding-left: 0;
         }
@@ -314,246 +169,176 @@
         .card-desc li {
             margin-bottom: 0.3rem;
             position: relative;
-            padding-left: 1.1rem;
+            padding-left: 1.2rem;
         }
 
         .card-desc li::before {
-            content: "▸";
-            color: var(--blue-light);
-            font-size: 0.75rem;
+            content: "•";
+            color: #2563eb;
+            font-weight: bold;
             position: absolute;
             left: 0;
-            top: 0.05em;
         }
 
-        /* ── Publications ── */
+        /* Publications list - Full view without scroll, bold journals */
         .pub-list {
             list-style: none;
-            background: var(--white);
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
+            background: white;
+            border-radius: 1.2rem;
+            border: 1px solid #e9eef2;
             padding: 1.5rem 2rem;
-            box-shadow: var(--shadow-sm);
-            counter-reset: pub-counter;
+            margin-bottom: 2rem;
         }
 
         .pub-list li {
-            padding: 0.85rem 0 0.85rem 2.5rem;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 0.93rem;
-            line-height: 1.55;
-            position: relative;
-            counter-increment: pub-counter;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eef2f6;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
-        .pub-list li::before {
-            content: counter(pub-counter);
-            position: absolute;
-            left: 0;
-            top: 0.9rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--white);
-            background: var(--blue-light);
-            width: 1.4rem; height: 1.4rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
+        .pub-list li:last-child {
+            border-bottom: none;
         }
-
-        .pub-list li:last-child { border-bottom: none; }
 
         .pub-list strong {
-            color: var(--blue);
+            color: #2563eb;
             font-weight: 650;
         }
 
-        /* ── Books ── */
+        /* Book cards with Yes24 links */
         .book-card {
             display: flex;
             gap: 1.2rem;
-            background: var(--white);
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
+            background: white;
+            border-radius: 1.2rem;
+            border: 1px solid #e9eef2;
             padding: 1.2rem;
             align-items: center;
-            transition: 0.18s ease;
+            transition: 0.15s ease;
             text-decoration: none;
             color: inherit;
-            box-shadow: var(--shadow-sm);
         }
 
         .book-card:hover {
-            border-color: #93c5fd;
-            box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
+            border-color: #2563eb40;
+            box-shadow: 0 8px 20px -8px rgba(37,99,235,0.15);
         }
 
         .book-cover {
-            width: 80px; height: 100px;
+            width: 80px;
+            height: 100px;
             background: #f1f5f9;
             border-radius: 0.6rem;
             object-fit: cover;
             border: 1px solid #d1d9e6;
-            flex-shrink: 0;
         }
 
         .book-info h4 {
             font-weight: 650;
-            margin-bottom: 0.25rem;
-            color: var(--navy);
-            line-height: 1.4;
+            margin-bottom: 0.2rem;
+            color: #0f172a;
         }
 
         .book-info p {
-            color: var(--muted);
-            font-size: 0.88rem;
-            margin-bottom: 0.35rem;
+            color: #475569;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
         }
 
         .book-link {
-            color: var(--blue-light);
-            font-size: 0.82rem;
-            font-weight: 600;
+            color: #2563eb;
+            font-size: 0.85rem;
+            text-decoration: none;
+            font-weight: 500;
             display: inline-flex;
             align-items: center;
             gap: 0.2rem;
         }
 
-        /* ── Skill bars (animated) ── */
-        .skill-item { margin-bottom: 1rem; }
+        .book-card:hover .book-link {
+            text-decoration: underline;
+        }
+
+        /* Skill bars */
+        .skill-item {
+            margin-bottom: 1rem;
+        }
 
         .skill-header {
             display: flex;
             justify-content: space-between;
-            font-size: 0.88rem;
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-            color: var(--slate);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.2rem;
         }
 
         .skill-bar-bg {
             background: #e2e8f0;
-            height: 8px;
+            height: 6px;
             border-radius: 10px;
             width: 100%;
-            overflow: hidden;
         }
 
         .skill-bar-fill {
-            background: linear-gradient(90deg, var(--blue) 0%, var(--blue-light) 100%);
-            height: 8px;
+            background: #2563eb;
+            height: 6px;
             border-radius: 10px;
-            width: 0%;
-            transition: width 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* ── Two column ── */
+        /* Two column layout */
         .two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
         }
 
-        /* ── Certifications ── */
-        .cert-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            background: var(--blue-pale);
-            color: var(--blue);
-            padding: 0.4rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            border: 1px solid #bfdbfe;
-        }
-
-        /* ── Footer ── */
-        .footer {
-            text-align: center;
-            margin-top: 3rem;
-            color: #94a3b8;
-            font-size: 0.82rem;
-            border-top: 1px solid var(--border);
-            padding-top: 2rem;
-            padding-bottom: 1rem;
-        }
-
-        /* ── Scroll reveal animation ── */
-        .reveal {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.55s ease, transform 0.55s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ── Responsive ── */
+        /* Responsive */
         @media (max-width: 768px) {
-            .profile-header { flex-direction: column; text-align: center; }
-            .profile-photo { width: 140px; height: 140px; }
-            .stats-grid { justify-content: center; }
-            .contact-links { justify-content: center; }
-            nav .nav-links { display: none; }
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-photo {
+                width: 150px;
+                height: 150px;
+            }
+            .stats-grid {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 700px) {
             .two-col { grid-template-columns: 1fr; }
             .name { font-size: 2rem; }
             .profile-header { padding: 1.5rem; }
-            .pub-list { padding: 1rem 1rem 1rem 1.5rem; }
+            .pub-list { padding: 1rem 1.5rem; }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 2rem;
         }
     </style>
 </head>
 <body>
-
-    <!-- ── Sticky Navigation ── -->
-    <nav>
-        <div class="nav-inner">
-            <a href="#top" class="nav-brand">Hanpyo Hong, Ph.D.</a>
-            <ul class="nav-links">
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#patent">Patent</a></li>
-                <li><a href="#publications">Publications</a></li>
-                <li><a href="#books">Books</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#teaching">Teaching</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container" id="top">
-
-        <!-- ── Profile Header ── -->
-        <div class="profile-header reveal">
-            <div class="profile-photo-wrap">
-                <img
-                    class="profile-photo"
-                    src="https://ui-avatars.com/api/?name=Hanpyo+Hong&size=360&background=1a4fa0&color=fff&bold=true"
-                    alt="Hanpyo Hong, Ph.D."
-                    onerror="this.src='https://ui-avatars.com/api/?name=HH&size=360&background=1a4fa0&color=fff'"
-                >
-                <span class="profile-photo-badge">Ph.D.</span>
-            </div>
+    <div class="container">
+        <!-- Header Profile with Photo -->
+        <div class="profile-header">
+            <!-- Profile photo with initial avatar (will be replaced when actual photo is provided) -->
+            <img 
+                class="profile-photo" 
+                src="https://ui-avatars.com/api/?name=Hanpyo+Hong&size=200&background=2563eb&color=fff&bold=true" 
+                alt="Hanpyo Hong, Ph.D."
+            >
             <div class="profile-info">
                 <div class="name">Hanpyo Hong</div>
                 <div class="title">Research Professor · Ph.D. in Statistics</div>
-                <div class="affiliation">
-                    Division of Biostatistics, Biomedical Research Institute<br>
-                    Pusan National University Yangsan Hospital, Korea
-                </div>
-                <div class="contact-links">
-                    <a href="mailto:" class="contact-chip">✉ Email</a>
-                    <a href="https://scholar.google.com/scholar?q=Hanpyo+Hong" target="_blank" rel="noopener" class="contact-chip">🎓 Google Scholar</a>
-                    <a href="https://orcid.org" target="_blank" rel="noopener" class="contact-chip">🆔 ORCID</a>
-                    <a href="https://github.com" target="_blank" rel="noopener" class="contact-chip">💻 GitHub</a>
-                </div>
+                <div class="affiliation">Division of Biostatistics, Biomedical Research Institute<br>Pusan National University Yangsan Hospital, Korea</div>
                 <div class="stats-grid">
                     <div class="stat-item"><span class="stat-number">20+</span><span class="stat-label">Papers</span></div>
                     <div class="stat-item"><span class="stat-number">25+</span><span class="stat-label">Yrs Exp</span></div>
@@ -563,19 +348,20 @@
             </div>
         </div>
 
-        <!-- ── Education + Current Position ── -->
-        <div class="two-col reveal">
+        <!-- Education + Current Position (2 columns) -->
+        <div class="two-col">
+            <!-- Education Card -->
             <div class="card">
                 <div class="card-date">Education</div>
                 <div class="card-title">Ph.D. in Statistics</div>
                 <div class="card-sub">Okayama University, Japan (MEXT Scholar) · Mar 2005</div>
-                <div style="margin-top:0.8rem; border-top:1px dashed #dce5ec; padding-top:0.6rem;">
-                    <div><strong>M.S.</strong> Korea University · Aug 2000</div>
-                    <div><strong>B.S.</strong> Korea University · Feb 1998</div>
-                </div>
+                <div style="margin-top: 0.8rem; border-top: 1px dashed #dce5ec;"></div>
+                <div style="margin-top: 0.5rem;"><strong>M.S.</strong> Korea University · Aug 2000</div>
+                <div><strong>B.S.</strong> Korea University · Feb 1998</div>
             </div>
+            <!-- Current Position Card -->
             <div class="card">
-                <div class="card-date">Current Position</div>
+                <div class="card-date">Current</div>
                 <div class="card-title">Research Professor</div>
                 <div class="card-sub">PNUH · Apr 2025 – Present</div>
                 <ul class="card-desc" style="margin-top:0.5rem;">
@@ -585,9 +371,9 @@
             </div>
         </div>
 
-        <!-- ── Professional Experience ── -->
-        <div id="experience" class="section-title reveal">💼 Professional Experience</div>
-        <div class="card-grid reveal">
+        <!-- Professional Experience -->
+        <div class="section-title">Professional Experience</div>
+        <div class="card-grid">
             <div class="card">
                 <div class="card-date">Apr 2025 – Present</div>
                 <div class="card-title">Research Professor</div>
@@ -669,15 +455,6 @@
             </div>
             <div class="card">
                 <div class="card-date">Mar 2005 – Dec 2009</div>
-                <div class="card-title">Researcher</div>
-                <div class="card-sub">NIRS (National Institute for Radiation Sciences), Japan</div>
-                <ul class="card-desc">
-                    <li>Radiation dose-response statistical modeling</li>
-                    <li>International collaboration & publications</li>
-                </ul>
-            </div>
-            <div class="card">
-                <div class="card-date">Mar 2001 – Dec 2004</div>
                 <div class="card-title">Six Sigma Specialist</div>
                 <div class="card-sub">POSCO, Six Sigma Team</div>
                 <ul class="card-desc">
@@ -696,19 +473,19 @@
             </div>
         </div>
 
-        <!-- ── Patent & Honors ── -->
-        <div id="patent" class="two-col" style="margin-top:2.5rem;">
+        <!-- Intellectual Property + Honors & Awards (2 columns) -->
+        <div class="two-col">
             <div>
-                <div class="section-title reveal">🔬 Patent</div>
-                <div class="card reveal">
+                <div class="section-title">Patent</div>
+                <div class="card">
                     <div class="card-title">Method for Diagnosing Developmental Disorders Based on Eye-tracking</div>
                     <div class="card-sub">Application No. 10-2025-0097005</div>
-                    <div style="font-size:0.9rem; color:var(--muted); margin-top:0.4rem;">Through Analysis of Atypical Visual Preference Patterns</div>
+                    <div style="font-size:0.9rem; margin-top:0.5rem;">Through Analysis of Atypical Visual Preference Patterns</div>
                 </div>
             </div>
             <div>
-                <div class="section-title reveal">🏆 Honors & Awards</div>
-                <div class="card reveal">
+                <div class="section-title">Honors & Awards</div>
+                <div class="card">
                     <ul class="card-desc" style="margin:0;">
                         <li>Japanese Government (MEXT) Scholarship (2001–2004)</li>
                         <li>Korea University Best Lecture Award (2012, 2013)</li>
@@ -718,17 +495,17 @@
             </div>
         </div>
 
-        <!-- ── Presentations ── -->
-        <div class="section-title reveal">🎤 Presentations</div>
-        <div class="card reveal">
+        <!-- Conference Presentation -->
+        <div class="section-title">Presentations</div>
+        <div class="card">
             <div class="card-date">Oct 29–31, 2025</div>
             <div class="card-title">Comparative Evaluation of ASAP and GAAD Algorithms for Hepatocellular Carcinoma Prediction</div>
             <div class="card-sub">LMCE 2025 & 66th Annual Meeting of KSLM · Incheon, Korea</div>
         </div>
 
-        <!-- ── Publications ── -->
-        <div id="publications" class="section-title reveal">📄 Publications</div>
-        <ul class="pub-list reveal">
+        <!-- Full Publications - APA style with bold journals, full view without scroll -->
+        <div class="section-title">Publications</div>
+        <ul class="pub-list">
             <li>Hong, H., et al. (2024). Laparoscopic Ventriculoperitoneal Shunt Insertion Without a Peel-Away Sheath in Children: A Comparison with Conventional Open Surgery. <strong>Journal of Pediatric Surgery</strong>, 59(4), 721-728.</li>
             <li>Hong, H., et al. (2024). Distinct characteristics of MetALD in the general population. <strong>Journal of Hepatology</strong>, 80(3), 412-420.</li>
             <li>Hong, H., et al. (2023). Analysis of clinical effectiveness for patients with COPD using the IoMT-based monitoring service. <strong>Journal of Medical Internet Research</strong>, 25(8), e34567.</li>
@@ -741,19 +518,20 @@
             <li>Hong, H., et al. (2021). Impact of the ACOSOG Z0011 trial on surgical practice in Asian patients: trends in axillary surgery for breast cancer. <strong>Journal of Breast Cancer</strong>, 24(5), 456-465.</li>
             <li>Hong, H., et al. (2021). Effects of textured food masticatory performance in older people with different dental conditions. <strong>Journal of Texture Studies</strong>, 52(4), 389-397.</li>
             <li>Hong, H., et al. (2021). Favorable Impact of a Multidisciplinary Team Approach on Heart Transplantation Outcomes in a Mid-Volume Center. <strong>Journal of Heart and Lung Transplantation</strong>, 40(4), 334-342.</li>
-            <li>Hong, H., et al. (2021). Adverse Effects of Adjuvant Tamoxifen Treatment on Bone Mineral Density in Premenopausal Breast Cancer Patients. <strong>Journal of Clinical Oncology</strong>, 39(15_suppl), 5678.</li>
+            <li>Hong, H., et al. (2021). Adverse Effects of Adjuvant Tamoxifen Treatment on Bone Mineral Density in Premenopausal Breast Cancer Patients: A Systematic Review and Meta-Analysis. <strong>Journal of Clinical Oncology</strong>, 39(15_suppl), 5678.</li>
             <li>Hong, H., et al. (2020). Long-term renal safety between patients with chronic hepatitis B receiving tenofovir vs. entecavir therapy: A multicenter study. <strong>Journal of Viral Hepatitis</strong>, 27(8), 789-797.</li>
             <li>Hong, H., et al. (2020). Comparison of trends in axillary surgery for breast cancer between Korean and Dutch cohorts. <strong>European Journal of Surgical Oncology</strong>, 46(6), 1023-1030.</li>
             <li>Hong, H., et al. (2020). Determining the target population that would most benefit from screening for hepatic fibrosis in a primary care setting. <strong>Journal of Gastroenterology and Hepatology</strong>, 35(5), 845-852.</li>
-            <li>Hong, H., &amp; Kurihara, K. (2019). Studies on Hotspots Detection for Multivariate Spatial Data Using Echelons. <strong>Journal of the Korean Statistical Society</strong>, 48(3), 412-425.</li>
-            <li>Hong, H., &amp; Kurihara, K. (2018). Hotspot detection for multivariate spatial data using echelons. <strong>Communications in Statistics - Simulation and Computation</strong>, 47(8), 2345-2358.</li>
+            <li>Hong, H., & Kurihara, K. (2019). Studies on Hotspots Detection for Multivariate Spatial Data Using Echelons. <strong>Journal of the Korean Statistical Society</strong>, 48(3), 412-425.</li>
+            <li>Hong, H., & Kurihara, K. (2018). Hotspot detection for multivariate spatial data using echelons. <strong>Communications in Statistics - Simulation and Computation</strong>, 47(8), 2345-2358.</li>
             <li>Hong, H. (2017). Detection of Hotspot areas Using Spatial Clustering Methods and Echelon Analysis. <strong>Journal of the Korean Data Analysis Society</strong>, 19(4), 1789-1801.</li>
-            <li>Hong, H., &amp; Kurihara, K. (2016). Detection of Hotspots for Geospatial Data with Echelons Analysis based on Spatial Scan Statistics. <strong>Computational Statistics & Data Analysis</strong>, 98, 112-125.</li>
+            <li>Hong, H., & Kurihara, K. (2016). Detection of Hotspots for Geospatial Data with Echelons Analysis based on Spatial Scan Statistics. <strong>Computational Statistics & Data Analysis</strong>, 98, 112-125.</li>
         </ul>
 
-        <!-- ── Books ── -->
-        <div id="books" class="section-title reveal">📚 Books</div>
-        <div style="display:flex; flex-direction:column; gap:1rem;" class="reveal">
+        <!-- Books Section with Yes24 links -->
+        <div class="section-title">📚 Books</div>
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <!-- Book 1: JMP 실험계획 -->
             <a href="https://www.yes24.com/product/goods/1520314" target="_blank" rel="noopener noreferrer" class="book-card">
                 <img class="book-cover" src="https://image.yes24.com/goods/1520314/XL" alt="JMP 실험계획 book cover" onerror="this.src='https://via.placeholder.com/80x100?text=JMP+DOE'">
                 <div class="book-info">
@@ -762,8 +540,10 @@
                     <span class="book-link">View on Yes24 →</span>
                 </div>
             </a>
+            
+            <!-- Book 2: SAS Base Programming -->
             <a href="https://www.yes24.com/Product/Goods/7884403" target="_blank" rel="noopener noreferrer" class="book-card">
-                <img class="book-cover" src="https://image.yes24.com/Goods/7884403/XL" alt="SAS Certification Prep Guide cover" onerror="this.src='https://via.placeholder.com/80x100?text=SAS+Cert'">
+                <img class="book-cover" src="https://image.yes24.com/Goods/7884403/XL" alt="SAS Certification Prep Guide: Base Programming for SAS 9 cover" onerror="this.src='https://via.placeholder.com/80x100?text=SAS+Cert+Guide'">
                 <div class="book-info">
                     <h4>SAS Certification Prep Guide: Base Programming for SAS 9</h4>
                     <p>SAS Institute · 2011</p>
@@ -772,30 +552,38 @@
             </a>
         </div>
 
-        <!-- ── Skills ── -->
-        <div id="skills" class="section-title reveal">⚙️ Skills & Expertise</div>
-        <div class="two-col reveal" id="skills-grid">
-            <div class="skill-item"><div class="skill-header"><span>Statistical Analysis</span><span>95%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="95"></div></div></div>
-            <div class="skill-item"><div class="skill-header"><span>Machine Learning & AI</span><span>88%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88"></div></div></div>
-            <div class="skill-item"><div class="skill-header"><span>Biostatistics</span><span>96%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="96"></div></div></div>
-            <div class="skill-item"><div class="skill-header"><span>Data Visualization</span><span>85%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div></div>
-            <div class="skill-item"><div class="skill-header"><span>Programming (SAS/R/Python)</span><span>85%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div></div>
-            <div class="skill-item"><div class="skill-header"><span>Technical Writing</span><span>92%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="92"></div></div></div>
-            <div class="skill-item"><div class="skill-header"><span>Six Sigma</span><span>90%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90"></div></div></div>
-            <div class="skill-item"><div class="skill-header"><span>Survey Design</span><span>88%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88"></div></div></div>
-            <div class="skill-item"><div class="skill-header"><span>Research Collaboration</span><span>93%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="93"></div></div></div>
-            <div class="skill-item"><div class="skill-header"><span>Big Data Analysis</span><span>82%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82"></div></div></div>
+        <!-- Skills & Expertise -->
+        <div class="section-title">Skills & Expertise</div>
+        <div class="two-col">
+            <div class="skill-item"><div class="skill-header"><span>Statistical Analysis</span><span>95%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width:95%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span>Machine Learning & AI</span><span>88%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width:88%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span>Biostatistics</span><span>96%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width:96%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span>Data Visualization</span><span>85%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width:85%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span>Programming</span><span>85%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width:85%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span>Technical Writing</span><span>92%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width:92%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span>Six Sigma</span><span>90%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width:90%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span>Survey Design</span><span>88%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width:88%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span>Research Collaboration</span><span>93%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width:93%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span>Big Data</span><span>82%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width:82%"></div></div></div>
         </div>
 
-        <!-- ── Certifications ── -->
-        <div class="two-col reveal" style="margin: 1.5rem 0 1rem;">
-            <div><span class="cert-chip">📜 Certified TRIZ Specialist Level 2</span></div>
-            <div><span class="cert-chip">📜 Survey Analyst (2001)</span></div>
+        <!-- Certifications -->
+        <div class="two-col" style="margin: 2rem 0 1rem;">
+            <div>
+                <span style="background:#e9eff9; padding:0.3rem 1.2rem; border-radius:40px; font-size:0.95rem; display: inline-block;">
+                    📜 Certified TRIZ Specialist Level 2
+                </span>
+            </div>
+            <div>
+                <span style="background:#e9eff9; padding:0.3rem 1.2rem; border-radius:40px; font-size:0.95rem; display: inline-block;">
+                    📜 Survey Analyst (2001)
+                </span>
+            </div>
         </div>
 
-        <!-- ── Teaching ── -->
-        <div id="teaching" class="section-title reveal">🎓 Teaching & Lectures</div>
-        <div class="card reveal">
+        <!-- Lectures & Special Presentations summary -->
+        <div class="section-title">Teaching & Lectures</div>
+        <div class="card">
             <ul class="card-desc">
                 <li>Medical Statistics Course (Logistic Regression, Correlation & Regression)</li>
                 <li>Clinical Trial Statistics in Practice: Case Studies</li>
@@ -806,56 +594,10 @@
             </ul>
         </div>
 
-        <!-- ── Footer ── -->
+        <!-- Footer -->
         <div class="footer">
-            © 2025 Hanpyo Hong · Research Professor, Division of Biostatistics · Pusan National University Yangsan Hospital
+            © 2025 Hanpyo Hong · Based on public academic profile from PNUH
         </div>
     </div>
-
-    <script>
-        // ── Scroll Reveal ──
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
-        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-        // ── Skill Bar Animation (triggered when in view) ──
-        const skillObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
-                        const target = bar.getAttribute('data-width');
-                        setTimeout(() => { bar.style.width = target + '%'; }, 150);
-                    });
-                    skillObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.2 });
-
-        const skillsGrid = document.getElementById('skills-grid');
-        if (skillsGrid) skillObserver.observe(skillsGrid);
-
-        // ── Active nav link highlight on scroll ──
-        const sections = document.querySelectorAll('[id]');
-        const navLinks = document.querySelectorAll('.nav-links a');
-
-        const navObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    navLinks.forEach(link => link.style.background = '');
-                    const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
-                    if (active) active.style.background = 'var(--blue-pale)';
-                }
-            });
-        }, { rootMargin: '-40% 0px -55% 0px' });
-
-        sections.forEach(s => navObserver.observe(s));
-    </script>
 </body>
 </html>
